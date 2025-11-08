@@ -12,6 +12,7 @@ interface WizardContainerProps {
 
 export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) => {
   const [currentStep, setCurrentStep] = React.useState(0);
+  const [hydrated, setHydrated] = React.useState(false);
   const [data, setData] = React.useState<RetirementData>({
     personalInfo: {
       age: 0,
@@ -55,17 +56,21 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
     if (saved) {
       try {
         const parsedData = JSON.parse(saved);
-        setData(parsedData.data);
-        setCurrentStep(parsedData.step);
+        if (parsedData && typeof parsedData.step === 'number' && parsedData.data) {
+          setData(parsedData.data);
+          setCurrentStep(parsedData.step);
+        }
       } catch (e) {
         console.error('Failed to load saved data', e);
       }
     }
+    setHydrated(true);
   }, []);
 
   React.useEffect(() => {
+    if (!hydrated) return;
     localStorage.setItem('retirementWizardData', JSON.stringify({ data, step: currentStep }));
-  }, [data, currentStep]);
+  }, [hydrated, data, currentStep]);
 
   const steps = [
     { id: 0, title: 'Personal Info', description: 'Basic information' },
