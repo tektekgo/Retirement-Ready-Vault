@@ -35,7 +35,7 @@ export const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-teal-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-card shadow-card p-8">
           <div className="text-center mb-8">
@@ -59,7 +59,7 @@ export const LoginForm: React.FC = () => {
           )}
 
           {success && (
-            <div className="mb-4 p-4 bg-teal-50 border border-teal-200 rounded-input text-teal-700">
+            <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-input text-blue-700">
               {success}
             </div>
           )}
@@ -75,7 +75,7 @@ export const LoginForm: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
+                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
                 placeholder="you@example.com"
               />
             </div>
@@ -91,7 +91,7 @@ export const LoginForm: React.FC = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
+                  className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
                   placeholder="••••••••"
                 />
               </div>
@@ -104,7 +104,7 @@ export const LoginForm: React.FC = () => {
                   type="checkbox"
                   checked={useMagicLink}
                   onChange={(e) => setUseMagicLink(e.target.checked)}
-                  className="h-4 w-4 text-teal-500 focus:ring-teal-500 border-charcoal-300 rounded"
+                  className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-charcoal-300 rounded"
                 />
                 <label htmlFor="magic-link" className="ml-2 block text-sm text-charcoal-600">
                   Use magic link instead
@@ -114,7 +114,7 @@ export const LoginForm: React.FC = () => {
               {!useMagicLink && (
                 <Link
                   to="/auth/forgot-password"
-                  className="text-sm font-medium text-teal-600 hover:text-teal-500 transition-colors duration-250"
+                  className="text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors duration-250"
                 >
                   Forgot password?
                 </Link>
@@ -124,7 +124,7 @@ export const LoginForm: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-button text-white bg-gradient-teal hover:shadow-card-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-350 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-button text-white bg-gradient-blue hover:shadow-card-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-350 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="flex items-center">
@@ -145,7 +145,7 @@ export const LoginForm: React.FC = () => {
               Don't have an account?{' '}
               <Link
                 to="/register"
-                className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-250"
+                className="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-250"
               >
                 Sign up now
               </Link>
@@ -154,7 +154,7 @@ export const LoginForm: React.FC = () => {
         </div>
 
         <p className="mt-8 text-center text-sm text-charcoal-500">
-          © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-teal-600 hover:text-teal-500">www.ai-focus.org</a>
+          © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-blue-600 hover:text-blue-500">www.ai-focus.org</a>
         </p>
       </div>
     </div>

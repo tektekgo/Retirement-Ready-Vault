@@ -55,12 +55,12 @@ export const RegisterForm: React.FC = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-teal-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full">
           <div className="bg-white rounded-card shadow-card p-8">
             <div className="text-center">
-              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 mb-4">
-                <svg className="h-8 w-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
+                <svg className="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
@@ -73,7 +73,7 @@ export const RegisterForm: React.FC = () => {
               </p>
               <Link
                 to="/login"
-                className="inline-block px-6 py-3 border border-transparent rounded-button text-white bg-gradient-teal hover:shadow-card-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-350 font-medium"
+                className="inline-block px-6 py-3 border border-transparent rounded-button text-white bg-gradient-blue hover:shadow-card-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-350 font-medium"
               >
                 Go to Login
               </Link>
@@ -85,7 +85,7 @@ export const RegisterForm: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-teal-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <div className="bg-white rounded-card shadow-card p-8">
           <div className="text-center mb-8">
@@ -119,7 +119,7 @@ export const RegisterForm: React.FC = () => {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
+                  className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
                   placeholder="John"
                 />
               </div>
@@ -133,7 +133,7 @@ export const RegisterForm: React.FC = () => {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
+                  className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
                   placeholder="Doe"
                 />
               </div>
@@ -149,7 +149,7 @@ export const RegisterForm: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
+                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
                 placeholder="you@example.com"
               />
             </div>
@@ -164,7 +164,7 @@ export const RegisterForm: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
+                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
                 placeholder="••••••••"
               />
               <p className="mt-2 text-xs text-charcoal-500">
@@ -182,7 +182,7 @@ export const RegisterForm: React.FC = () => {
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
+                className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
                 placeholder="••••••••"
               />
             </div>
@@ -190,7 +190,7 @@ export const RegisterForm: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-button text-white bg-gradient-teal hover:shadow-card-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-350 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-button text-white bg-gradient-blue hover:shadow-card-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-350 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <span className="flex items-center">
@@ -211,7 +211,7 @@ export const RegisterForm: React.FC = () => {
               Already have an account?{' '}
               <Link
                 to="/login"
-                className="font-medium text-teal-600 hover:text-teal-500 transition-colors duration-250"
+                className="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-250"
               >
                 Sign in
               </Link>
@@ -220,7 +220,7 @@ export const RegisterForm: React.FC = () => {
         </div>
 
         <p className="mt-8 text-center text-sm text-charcoal-500">
-          © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-teal-600 hover:text-teal-500">www.ai-focus.org</a>
+          © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-blue-600 hover:text-blue-500">www.ai-focus.org</a>
         </p>
       </div>
     </div>
