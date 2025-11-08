@@ -1,4 +1,10 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { AuthGuard } from './components/auth/AuthGuard';
+import { LoginForm } from './components/auth/LoginForm';
+import { RegisterForm } from './components/auth/RegisterForm';
+import { ForgotPassword } from './components/auth/ForgotPassword';
 import { WizardContainer } from './components/wizard/WizardContainer';
 import { RetirementDashboard } from './components/dashboard/RetirementDashboard';
 import { RetirementData } from './types';
@@ -16,13 +22,61 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {!retirementData ? (
-        <WizardContainer onComplete={handleWizardComplete} />
-      ) : (
-        <RetirementDashboard data={retirementData} onReset={handleReset} />
-      )}
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route 
+            path="/login" 
+            element={
+              <AuthGuard requireAuth={false}>
+                <LoginForm />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/register" 
+            element={
+              <AuthGuard requireAuth={false}>
+                <RegisterForm />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/auth/forgot-password" 
+            element={
+              <AuthGuard requireAuth={false}>
+                <ForgotPassword />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/wizard" 
+            element={
+              <AuthGuard requireAuth={true}>
+                {!retirementData ? (
+                  <WizardContainer onComplete={handleWizardComplete} />
+                ) : (
+                  <Navigate to="/dashboard" replace />
+                )}
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/dashboard" 
+            element={
+              <AuthGuard requireAuth={true}>
+                {retirementData ? (
+                  <RetirementDashboard data={retirementData} onReset={handleReset} />
+                ) : (
+                  <Navigate to="/wizard" replace />
+                )}
+              </AuthGuard>
+            } 
+          />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
