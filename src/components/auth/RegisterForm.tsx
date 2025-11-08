@@ -45,8 +45,9 @@ export const RegisterForm: React.FC = () => {
         last_name: lastName,
       });
       setSuccess(true);
-    } catch (err: any) {
-      setError(err.message || 'Failed to create account. Please try again.');
+    } catch (err) {
+      const error = err as Error;
+      setError(error.message || 'Failed to create account. Please try again.');
     } finally {
       setLoading(false);
     }

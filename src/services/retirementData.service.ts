@@ -1,15 +1,23 @@
 import { supabase } from './supabase';
-import { RetirementData } from '../types';
+import { RetirementData, PersonalInfo, MonthlyExpenses, Assets, IncomeSources, RetirementAnalysis } from '../types';
+
+export interface WizardCompletionStatus {
+  step1: boolean;
+  step2: boolean;
+  step3: boolean;
+  step4: boolean;
+  step5: boolean;
+}
 
 export interface RetirementDataRecord {
   id: string;
   user_id: string;
-  personal_info: any;
-  monthly_expenses: any;
-  assets: any;
-  income_sources: any;
-  analysis_results: any;
-  wizard_completion_status: any;
+  personal_info: Partial<PersonalInfo>;
+  monthly_expenses: Partial<MonthlyExpenses>;
+  assets: Partial<Assets>;
+  income_sources: Partial<IncomeSources>;
+  analysis_results: Partial<RetirementAnalysis> | null;
+  wizard_completion_status: WizardCompletionStatus;
   created_at: string;
   updated_at: string;
 }
@@ -70,7 +78,7 @@ export class RetirementDataService {
       await this.initializeUserData(userId);
     }
 
-    const updates: any = {};
+    const updates: Partial<RetirementDataRecord> = {};
 
     if (stepData.personalInfo) {
       updates.personal_info = stepData.personalInfo;
@@ -135,7 +143,7 @@ export class RetirementDataService {
     if (error) throw error;
   }
 
-  async saveAnalysisResults(userId: string, analysisResults: any): Promise<void> {
+  async saveAnalysisResults(userId: string, analysisResults: Partial<RetirementAnalysis>): Promise<void> {
     const { error } = await supabase
       .from('retirement_data')
       .update({ analysis_results: analysisResults })
@@ -144,7 +152,7 @@ export class RetirementDataService {
     if (error) throw error;
   }
 
-  async migrateFromLocalStorage(userId: string, localData: any): Promise<void> {
+  async migrateFromLocalStorage(userId: string, localData: { data?: RetirementData }): Promise<void> {
     if (!localData || !localData.data) {
       return;
     }

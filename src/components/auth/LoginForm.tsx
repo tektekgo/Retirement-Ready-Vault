@@ -26,8 +26,9 @@ export const LoginForm: React.FC = () => {
         await signIn(email, password);
         navigate('/dashboard');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in. Please check your credentials.');
+    } catch (err) {
+      const error = err as Error;
+      setError(error.message || 'Failed to sign in. Please check your credentials.');
     } finally {
       setLoading(false);
     }

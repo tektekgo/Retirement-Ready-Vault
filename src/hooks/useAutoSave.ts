@@ -68,7 +68,8 @@ export const useAutoSave = ({
         setTimeout(() => {
           setStatus((prev) => ({ ...prev, saved: false }));
         }, 3000);
-      } catch (error: any) {
+      } catch (err) {
+        const error = err as Error;
         setStatus({
           saving: false,
           saved: false,
