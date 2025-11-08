@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { UserProfile, UserMetadata } from '../types/auth.types';
+import { Session } from '@supabase/supabase-js';
 
 export class AuthService {
   async signUp(email: string, password: string, metadata?: UserMetadata) {

@@ -69,7 +69,7 @@ export class RetirementDataService {
 
   async saveWizardStep(
     userId: string,
-    step: string,
+    _step: string,
     stepData: Partial<RetirementData>
   ): Promise<void> {
     const existingData = await this.loadUserData(userId);
@@ -82,34 +82,18 @@ export class RetirementDataService {
 
     if (stepData.personalInfo) {
       updates.personal_info = stepData.personalInfo;
-      updates.wizard_completion_status = {
-        ...(existingData?.personalInfo ? { step1: true } : {}),
-        step1: true,
-      };
     }
 
     if (stepData.expenses) {
       updates.monthly_expenses = stepData.expenses;
-      updates.wizard_completion_status = {
-        ...(existingData?.expenses ? { step2: true } : {}),
-        step2: true,
-      };
     }
 
     if (stepData.assets) {
       updates.assets = stepData.assets;
-      updates.wizard_completion_status = {
-        ...(existingData?.assets ? { step3: true } : {}),
-        step3: true,
-      };
     }
 
     if (stepData.incomeSources) {
       updates.income_sources = stepData.incomeSources;
-      updates.wizard_completion_status = {
-        ...(existingData?.incomeSources ? { step4: true } : {}),
-        step4: true,
-      };
     }
 
     const { error } = await supabase
@@ -174,42 +158,53 @@ export class RetirementDataService {
   }
 
   private convertToRetirementData(record: RetirementDataRecord): RetirementData {
-    return {
-      personalInfo: record.personal_info || {
-        age: 0,
-        targetRetirementAge: 0,
-        riskTolerance: 5,
+    const defaultPersonalInfo: PersonalInfo = {
+      age: 0,
+      targetRetirementAge: 0,
+      riskTolerance: 5,
+    };
+
+    const defaultExpenses: MonthlyExpenses = {
+      essential: {
+        housing: 0,
+        utilities: 0,
+        food: 0,
+        healthcare: 0,
+        insurance: 0,
+        debtPayments: 0,
       },
-      expenses: record.monthly_expenses || {
-        essential: {
-          housing: 0,
-          utilities: 0,
-          food: 0,
-          healthcare: 0,
-          insurance: 0,
-          debtPayments: 0,
-        },
-        discretionary: {
-          entertainment: 0,
-          travel: 0,
-          dining: 0,
-          hobbies: 0,
-          other: 0,
-        },
-      },
-      assets: record.assets || {
-        retirement401k: 0,
-        iraTraditional: 0,
-        iraRoth: 0,
-        brokerage: 0,
-        savings: 0,
-        realEstate: 0,
+      discretionary: {
+        entertainment: 0,
+        travel: 0,
+        dining: 0,
+        hobbies: 0,
         other: 0,
       },
-      incomeSources: record.income_sources || {
-        currentSalary: 0,
-        socialSecuritySelf: { age: 67, monthlyBenefit: 0 },
+    };
+
+    const defaultAssets: Assets = {
+      retirement401k: 0,
+      iraTraditional: 0,
+      iraRoth: 0,
+      brokerage: 0,
+      savings: 0,
+      realEstate: 0,
+      other: 0,
+    };
+
+    const defaultIncomeSources: IncomeSources = {
+      currentSalary: 0,
+      socialSecuritySelf: { age: 67, monthlyBenefit: 0 },
+    };
+
+    return {
+      personalInfo: { ...defaultPersonalInfo, ...record.personal_info },
+      expenses: { 
+        essential: { ...defaultExpenses.essential, ...record.monthly_expenses?.essential },
+        discretionary: { ...defaultExpenses.discretionary, ...record.monthly_expenses?.discretionary },
       },
+      assets: { ...defaultAssets, ...record.assets },
+      incomeSources: { ...defaultIncomeSources, ...record.income_sources },
     };
   }
 }
