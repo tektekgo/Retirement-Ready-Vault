@@ -15,9 +15,6 @@ export class AuthService {
 
     if (error) throw error;
 
-    if (data.user) {
-      await this.createUserProfile(data.user.id, email, metadata);
-    }
 
     return data;
   }
@@ -97,6 +94,16 @@ export class AuthService {
     }
 
     return data;
+  }
+
+  async ensureUserProfile(userId: string, email: string, metadata?: UserMetadata): Promise<UserProfile> {
+    const existingProfile = await this.getUserProfile(userId);
+    
+    if (existingProfile) {
+      return existingProfile;
+    }
+
+    return await this.createUserProfile(userId, email, metadata);
   }
 
   async createUserProfile(userId: string, email: string, metadata?: UserMetadata): Promise<UserProfile> {

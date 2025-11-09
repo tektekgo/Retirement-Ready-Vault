@@ -22,7 +22,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         
         if (currentSession?.user) {
           setUser(currentSession.user);
-          const userProfile = await authService.getUserProfile(currentSession.user.id);
+          const userProfile = await authService.ensureUserProfile(
+            currentSession.user.id,
+            currentSession.user.email || '',
+            currentSession.user.user_metadata
+          );
           setProfile(userProfile);
         }
       } catch (error) {
@@ -41,10 +45,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (currentSession?.user) {
           try {
-            const userProfile = await authService.getUserProfile(currentSession.user.id);
+            const userProfile = await authService.ensureUserProfile(
+              currentSession.user.id,
+              currentSession.user.email || '',
+              currentSession.user.user_metadata
+            );
             setProfile(userProfile);
           } catch (error) {
-            console.error('Error fetching user profile:', error);
+            console.error('Error ensuring user profile:', error);
             setProfile(null);
           }
         } else {
