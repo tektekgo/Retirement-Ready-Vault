@@ -36,7 +36,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
   }
 
   if (!requireAuth && user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return <>{children}</>;

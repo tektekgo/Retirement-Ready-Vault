@@ -5,6 +5,7 @@ import { AuthGuard } from './components/auth/AuthGuard';
 import { LoginForm } from './components/auth/LoginForm';
 import { RegisterForm } from './components/auth/RegisterForm';
 import { ForgotPassword } from './components/auth/ForgotPassword';
+import { LandingPage } from './components/dashboard/LandingPage';
 import { WizardContainer } from './components/wizard/WizardContainer';
 import { RetirementDashboard } from './components/dashboard/RetirementDashboard';
 import { RetirementData } from './types';
@@ -50,6 +51,14 @@ function App() {
             } 
           />
           <Route 
+            path="/home" 
+            element={
+              <AuthGuard requireAuth={true}>
+                <LandingPage />
+              </AuthGuard>
+            } 
+          />
+          <Route 
             path="/wizard" 
             element={
               <AuthGuard requireAuth={true}>
@@ -68,7 +77,7 @@ function App() {
                 {retirementData ? (
                   <RetirementDashboard data={retirementData} onReset={handleReset} />
                 ) : (
-                  <Navigate to="/wizard" replace />
+                  <Navigate to="/home" replace />
                 )}
               </AuthGuard>
             } 

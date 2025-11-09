@@ -264,7 +264,7 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
       <footer className="bg-white border-t border-charcoal-200 py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-sm text-charcoal-600">
-            © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors">www.ai-focus.org</a>
+            © 2025 AI-Focus.org | <a href="https://www.ai-focus.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors">www.ai-focus.org</a>
           </p>
           <p className="text-xs text-charcoal-500 mt-2">
             Email: <a href="mailto:retirement-ready-vault@ai-focus.org" className="text-blue-600 hover:text-blue-500">retirement-ready-vault@ai-focus.org</a>
