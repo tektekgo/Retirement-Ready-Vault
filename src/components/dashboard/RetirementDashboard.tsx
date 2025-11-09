@@ -5,6 +5,7 @@ import { exportToPDF, exportToCSV } from '../../services/export';
 import { RetirementChart } from './Charts/RetirementChart';
 import { ExpenseBreakdownChart } from './Charts/ExpenseBreakdownChart';
 import { AssetAllocationChart } from './Charts/AssetAllocationChart';
+import { useAuth } from '../../hooks/useAuth';
 
 interface RetirementDashboardProps {
   data: RetirementData;
@@ -12,6 +13,7 @@ interface RetirementDashboardProps {
 }
 
 export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, onReset }) => {
+  const { signOut, user } = useAuth();
   const [selectedMethod, setSelectedMethod] = React.useState<'basic' | 'intermediate' | 'advanced'>('intermediate');
   const [analysis, setAnalysis] = React.useState<RetirementAnalysis | null>(null);
 
@@ -43,6 +45,14 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   if (!analysis) {
     return <div>Loading...</div>;
   }
@@ -52,21 +62,51 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
   const totalAssets = Object.values(data.assets).reduce((a, b) => a + b, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
-          <div className="flex justify-between items-center mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex flex-col">
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <img 
+              src="/src/assets/ai-focus-logo.png" 
+              alt="AI Focus" 
+              className="h-10"
+            />
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Retirement Analysis Dashboard</h1>
-              <p className="text-gray-600 mt-1">Your comprehensive retirement readiness report</p>
+              <h1 className="font-heading text-xl font-bold text-navy-900">Retirement Ready Vault</h1>
+              <p className="text-xs text-charcoal-600">Powered by AI-Focus.org</p>
             </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            {user && (
+              <span className="text-sm text-charcoal-600">
+                {user.email}
+              </span>
+            )}
             <button
-              onClick={onReset}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
             >
-              Start Over
+              Logout
             </button>
           </div>
+        </div>
+      </header>
+
+      <div className="flex-1 py-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="bg-white rounded-card shadow-card p-8 mb-6">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h2 className="font-heading text-2xl font-bold text-navy-900">Retirement Analysis Dashboard</h2>
+                <p className="text-charcoal-600 mt-1">Your comprehensive retirement readiness report</p>
+              </div>
+              <button
+                onClick={onReset}
+                className="px-4 py-2 bg-charcoal-200 text-charcoal-700 rounded-button hover:bg-charcoal-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-250"
+              >
+                Start Over
+              </button>
+            </div>
 
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">Analysis Method</label>
@@ -206,6 +246,18 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
           </div>
         </div>
       </div>
+      </div>
+
+      <footer className="bg-white border-t border-charcoal-200 py-6">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-sm text-charcoal-600">
+            © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors">www.ai-focus.org</a>
+          </p>
+          <p className="text-xs text-charcoal-500 mt-2">
+            Email: <a href="mailto:retirement-ready-vault@ai-focus.org" className="text-blue-600 hover:text-blue-500">retirement-ready-vault@ai-focus.org</a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

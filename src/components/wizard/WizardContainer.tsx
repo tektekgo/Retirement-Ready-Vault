@@ -5,12 +5,14 @@ import { AssetsStep } from './AssetsStep';
 import { IncomeSourcesStep } from './IncomeSourcesStep';
 import { RiskAssessmentStep } from './RiskAssessmentStep';
 import { RetirementData, PersonalInfo, MonthlyExpenses, Assets, IncomeSources } from '../../types';
+import { useAuth } from '../../hooks/useAuth';
 
 interface WizardContainerProps {
   onComplete: (data: RetirementData) => void;
 }
 
 export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) => {
+  const { signOut, user } = useAuth();
   const [currentStep, setCurrentStep] = React.useState(0);
   const [hydrated, setHydrated] = React.useState(false);
   const [data, setData] = React.useState<RetirementData>({
@@ -94,14 +96,52 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
     onComplete(completedData);
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Retirement Ready Vault</h1>
-            <p className="text-gray-600">Complete the wizard to analyze your retirement readiness</p>
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex flex-col">
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <img 
+              src="/src/assets/ai-focus-logo.png" 
+              alt="AI Focus" 
+              className="h-10"
+            />
+            <div>
+              <h1 className="font-heading text-xl font-bold text-navy-900">Retirement Ready Vault</h1>
+              <p className="text-xs text-charcoal-600">Powered by AI-Focus.org</p>
+            </div>
           </div>
+          <div className="flex items-center space-x-4">
+            {user && (
+              <span className="text-sm text-charcoal-600">
+                {user.email}
+              </span>
+            )}
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex-1 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-card shadow-card p-8">
+            <div className="mb-8">
+              <h2 className="font-heading text-2xl font-bold text-navy-900 mb-2">Retirement Planning Wizard</h2>
+              <p className="text-charcoal-600">Complete the wizard to analyze your retirement readiness</p>
+            </div>
 
           <div className="mb-8">
             <div className="flex items-center justify-between">
@@ -175,6 +215,18 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
           </div>
         </div>
       </div>
+      </div>
+
+      <footer className="bg-white border-t border-charcoal-200 py-6">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-sm text-charcoal-600">
+            © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors">www.ai-focus.org</a>
+          </p>
+          <p className="text-xs text-charcoal-500 mt-2">
+            Email: <a href="mailto:retirement-ready-vault@ai-focus.org" className="text-blue-600 hover:text-blue-500">retirement-ready-vault@ai-focus.org</a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
