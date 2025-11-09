@@ -1,18 +1,21 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PersonalInfoStep } from './PersonalInfoStep';
 import { ExpensesStep } from './ExpensesStep';
 import { AssetsStep } from './AssetsStep';
 import { IncomeSourcesStep } from './IncomeSourcesStep';
 import { RiskAssessmentStep } from './RiskAssessmentStep';
 import { RetirementData, PersonalInfo, MonthlyExpenses, Assets, IncomeSources } from '../../types';
+import { useAuth } from '../../hooks/useAuth';
+import { retirementDataService } from '../../services/retirementData.service';
+import { useAutoSave } from '../../hooks/useAutoSave';
 
-interface WizardContainerProps {
-  onComplete: (data: RetirementData) => void;
-}
-
-export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) => {
+export const WizardContainer: React.FC = () => {
+  const navigate = useNavigate();
+  const { signOut, user } = useAuth();
   const [currentStep, setCurrentStep] = React.useState(0);
   const [hydrated, setHydrated] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState<RetirementData>({
     personalInfo: {
       age: 0,
@@ -51,21 +54,50 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
     },
   });
 
+  const autoSaveStatus = useAutoSave({
+    userId: user?.id || '',
+    data,
+    enabled: hydrated && !!user?.id,
+  });
+
   React.useEffect(() => {
-    const saved = localStorage.getItem('retirementWizardData');
-    if (saved) {
-      try {
-        const parsedData = JSON.parse(saved);
-        if (parsedData && typeof parsedData.step === 'number' && parsedData.data) {
-          setData(parsedData.data);
-          setCurrentStep(parsedData.step);
-        }
-      } catch (e) {
-        console.error('Failed to load saved data', e);
+    const loadData = async () => {
+      if (!user?.id) {
+        setLoading(false);
+        return;
       }
-    }
-    setHydrated(true);
-  }, []);
+
+      try {
+        const cloudData = await retirementDataService.loadUserData(user.id);
+        
+        if (cloudData) {
+          setData(cloudData);
+          setCurrentStep(0);
+        } else {
+          const localData = localStorage.getItem('retirementWizardData');
+          if (localData) {
+            try {
+              const parsedData = JSON.parse(localData);
+              if (parsedData && typeof parsedData.step === 'number' && parsedData.data) {
+                setData(parsedData.data);
+                setCurrentStep(parsedData.step);
+                await retirementDataService.migrateFromLocalStorage(user.id, parsedData);
+              }
+            } catch (e) {
+              console.error('Failed to migrate local data', e);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error loading retirement data:', error);
+      } finally {
+        setLoading(false);
+        setHydrated(true);
+      }
+    };
+
+    loadData();
+  }, [user?.id]);
 
   React.useEffect(() => {
     if (!hydrated) return;
@@ -88,20 +120,98 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const handleComplete = () => {
-    const completedData = { ...data, completedAt: new Date() };
-    localStorage.removeItem('retirementWizardData');
-    onComplete(completedData);
+  const handleComplete = async () => {
+    if (user?.id) {
+      try {
+        await retirementDataService.saveAllData(user.id, data);
+      } catch (error) {
+        console.error('Error saving final data:', error);
+      }
+    }
+    navigate('/dashboard');
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-charcoal-600">Loading your retirement data...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Retirement Ready Vault</h1>
-            <p className="text-gray-600">Complete the wizard to analyze your retirement readiness</p>
+    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex flex-col">
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <img 
+              src="/src/assets/ai-focus-logo.png" 
+              alt="AI Focus" 
+              className="h-10"
+            />
+            <div>
+              <h1 className="font-heading text-xl font-bold text-navy-900">Retirement Ready Vault</h1>
+              <p className="text-xs text-charcoal-600">Powered by AI-Focus.org</p>
+            </div>
           </div>
+          <div className="flex items-center space-x-4">
+            {autoSaveStatus.saving && (
+              <span className="text-xs text-blue-600 flex items-center">
+                <svg className="animate-spin h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Saving...
+              </span>
+            )}
+            {autoSaveStatus.saved && (
+              <span className="text-xs text-green-600">✓ Saved</span>
+            )}
+            <button
+              onClick={() => navigate('/home')}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+            >
+              Dashboard
+            </button>
+            {user && (
+              <span className="text-sm text-charcoal-600">
+                {user.email}
+              </span>
+            )}
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex-1 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-card shadow-card p-8">
+            <div className="mb-8">
+              <h2 className="font-heading text-2xl font-bold text-navy-900 mb-2">Retirement Planning Wizard</h2>
+              <p className="text-charcoal-600">Complete the wizard to analyze your retirement readiness</p>
+            </div>
 
           <div className="mb-8">
             <div className="flex items-center justify-between">
@@ -175,6 +285,18 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
           </div>
         </div>
       </div>
+      </div>
+
+      <footer className="bg-white border-t border-charcoal-200 py-6">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-sm text-charcoal-600">
+            © 2025 AI-Focus.org | <a href="https://www.ai-focus.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors">www.ai-focus.org</a>
+          </p>
+          <p className="text-xs text-charcoal-500 mt-2">
+            Email: <a href="mailto:retirement-ready-vault@ai-focus.org" className="text-blue-600 hover:text-blue-500">retirement-ready-vault@ai-focus.org</a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
