@@ -24,7 +24,7 @@ export const LoginForm: React.FC = () => {
         setSuccess('Magic link sent! Check your email to sign in.');
       } else {
         await signIn(email, password);
-        navigate('/dashboard');
+        navigate('/home');
       }
     } catch (err) {
       const error = err as Error;
@@ -154,7 +154,7 @@ export const LoginForm: React.FC = () => {
         </div>
 
         <p className="mt-8 text-center text-sm text-charcoal-500">
-          © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-blue-600 hover:text-blue-500">www.ai-focus.org</a>
+          © 2025 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-blue-600 hover:text-blue-500">www.ai-focus.org</a>
         </p>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PersonalInfoStep } from './PersonalInfoStep';
 import { ExpensesStep } from './ExpensesStep';
 import { AssetsStep } from './AssetsStep';
@@ -9,11 +10,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { retirementDataService } from '../../services/retirementData.service';
 import { useAutoSave } from '../../hooks/useAutoSave';
 
-interface WizardContainerProps {
-  onComplete: (data: RetirementData) => void;
-}
-
-export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) => {
+export const WizardContainer: React.FC = () => {
+  const navigate = useNavigate();
   const { signOut, user } = useAuth();
   const [currentStep, setCurrentStep] = React.useState(0);
   const [hydrated, setHydrated] = React.useState(false);
@@ -122,10 +120,15 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const handleComplete = () => {
-    const completedData = { ...data, completedAt: new Date() };
-    localStorage.removeItem('retirementWizardData');
-    onComplete(completedData);
+  const handleComplete = async () => {
+    if (user?.id) {
+      try {
+        await retirementDataService.saveAllData(user.id, data);
+      } catch (error) {
+        console.error('Error saving final data:', error);
+      }
+    }
+    navigate('/dashboard');
   };
 
   const handleLogout = async () => {
@@ -175,6 +178,18 @@ export const WizardContainer: React.FC<WizardContainerProps> = ({ onComplete }) 
             {autoSaveStatus.saved && (
               <span className="text-xs text-green-600">✓ Saved</span>
             )}
+            <button
+              onClick={() => navigate('/home')}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+            >
+              Dashboard
+            </button>
             {user && (
               <span className="text-sm text-charcoal-600">
                 {user.email}

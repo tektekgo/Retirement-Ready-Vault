@@ -8,20 +8,8 @@ import { ForgotPassword } from './components/auth/ForgotPassword';
 import { LandingPage } from './components/dashboard/LandingPage';
 import { WizardContainer } from './components/wizard/WizardContainer';
 import { RetirementDashboard } from './components/dashboard/RetirementDashboard';
-import { RetirementData } from './types';
 
 function App() {
-  const [retirementData, setRetirementData] = React.useState<RetirementData | null>(null);
-
-  const handleWizardComplete = (data: RetirementData) => {
-    setRetirementData(data);
-  };
-
-  const handleReset = () => {
-    setRetirementData(null);
-    localStorage.removeItem('retirementWizardData');
-  };
-
   return (
     <AuthProvider>
       <Router>
@@ -62,11 +50,7 @@ function App() {
             path="/wizard" 
             element={
               <AuthGuard requireAuth={true}>
-                {!retirementData ? (
-                  <WizardContainer onComplete={handleWizardComplete} />
-                ) : (
-                  <Navigate to="/dashboard" replace />
-                )}
+                <WizardContainer />
               </AuthGuard>
             } 
           />
@@ -74,11 +58,7 @@ function App() {
             path="/dashboard" 
             element={
               <AuthGuard requireAuth={true}>
-                {retirementData ? (
-                  <RetirementDashboard data={retirementData} onReset={handleReset} />
-                ) : (
-                  <Navigate to="/home" replace />
-                )}
+                <RetirementDashboard />
               </AuthGuard>
             } 
           />

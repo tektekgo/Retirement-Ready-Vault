@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { RetirementData, RetirementAnalysis } from '../../types';
 import { calculateBasicAnalysis, calculateIntermediateAnalysis, calculateAdvancedAnalysis } from '../../services/retirementCalculations';
 import { exportToPDF, exportToCSV } from '../../services/export';
@@ -8,17 +9,39 @@ import { AssetAllocationChart } from './Charts/AssetAllocationChart';
 import { useAuth } from '../../hooks/useAuth';
 import { retirementDataService } from '../../services/retirementData.service';
 
-interface RetirementDashboardProps {
-  data: RetirementData;
-  onReset: () => void;
-}
-
-export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, onReset }) => {
+export const RetirementDashboard: React.FC = () => {
   const { signOut, user } = useAuth();
+  const navigate = useNavigate();
   const [selectedMethod, setSelectedMethod] = React.useState<'basic' | 'intermediate' | 'advanced'>('intermediate');
   const [analysis, setAnalysis] = React.useState<RetirementAnalysis | null>(null);
+  const [data, setData] = React.useState<RetirementData | null>(null);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
+    const loadData = async () => {
+      if (!user?.id) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const retirementData = await retirementDataService.loadUserData(user.id);
+        if (retirementData && retirementData.personalInfo.age > 0) {
+          setData(retirementData);
+        }
+      } catch (error) {
+        console.error('Error loading retirement data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [user?.id]);
+
+  React.useEffect(() => {
+    if (!data) return;
+
     const calculateAndSave = async () => {
       let result: RetirementAnalysis;
       switch (selectedMethod) {
@@ -66,8 +89,52 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
     }
   };
 
-  if (!analysis) {
-    return <div>Loading...</div>;
+  const handleEditData = () => {
+    navigate('/wizard');
+  };
+
+  const handleReset = async () => {
+    if (user?.id) {
+      try {
+        await retirementDataService.deleteUserData(user.id);
+        localStorage.removeItem('retirementWizardData');
+        navigate('/wizard');
+      } catch (error) {
+        console.error('Error deleting data:', error);
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-charcoal-600">Loading your retirement analysis...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data || !analysis) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <h2 className="font-heading text-2xl font-bold text-navy-900 mb-4">No Data Yet</h2>
+            <p className="text-charcoal-600 mb-6">
+              You haven't completed the retirement planning wizard yet. Complete the wizard to see your personalized analysis.
+            </p>
+            <button
+              onClick={() => navigate('/wizard')}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            >
+              Start Planning
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const totalEssential = Object.values(data.expenses.essential).reduce((a, b) => a + b, 0);
@@ -90,6 +157,12 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
             </div>
           </div>
           <div className="flex items-center space-x-4">
+            <button
+              onClick={() => navigate('/home')}
+              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+            >
+              Home
+            </button>
             {user && (
               <span className="text-sm text-charcoal-600">
                 {user.email}
@@ -113,12 +186,20 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
                 <h2 className="font-heading text-2xl font-bold text-navy-900">Retirement Analysis Dashboard</h2>
                 <p className="text-charcoal-600 mt-1">Your comprehensive retirement readiness report</p>
               </div>
-              <button
-                onClick={onReset}
-                className="px-4 py-2 bg-charcoal-200 text-charcoal-700 rounded-button hover:bg-charcoal-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-250"
-              >
-                Start Over
-              </button>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleEditData}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-button hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-250"
+                >
+                  Edit Data
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="px-4 py-2 bg-charcoal-200 text-charcoal-700 rounded-button hover:bg-charcoal-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-250"
+                >
+                  Start Over
+                </button>
+              </div>
             </div>
 
           <div className="mb-6">
