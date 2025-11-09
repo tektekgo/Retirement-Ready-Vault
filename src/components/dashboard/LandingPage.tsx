@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { retirementDataService } from '../../services/retirementData.service';
 import { RetirementData } from '../../types';
@@ -155,12 +155,12 @@ export const LandingPage: React.FC = () => {
                     >
                       Edit Planning Data
                     </button>
-                    <button
-                      onClick={handleViewDashboard}
-                      className="w-full px-6 py-3 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium"
+                    <Link
+                      to="/dashboard"
+                      className="w-full px-6 py-3 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium block text-center"
                     >
                       View Dashboard
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
