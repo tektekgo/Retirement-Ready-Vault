@@ -6,6 +6,7 @@ import { RetirementChart } from './Charts/RetirementChart';
 import { ExpenseBreakdownChart } from './Charts/ExpenseBreakdownChart';
 import { AssetAllocationChart } from './Charts/AssetAllocationChart';
 import { useAuth } from '../../hooks/useAuth';
+import { retirementDataService } from '../../services/retirementData.service';
 
 interface RetirementDashboardProps {
   data: RetirementData;
@@ -18,20 +19,32 @@ export const RetirementDashboard: React.FC<RetirementDashboardProps> = ({ data, 
   const [analysis, setAnalysis] = React.useState<RetirementAnalysis | null>(null);
 
   React.useEffect(() => {
-    let result: RetirementAnalysis;
-    switch (selectedMethod) {
-      case 'basic':
-        result = calculateBasicAnalysis(data);
-        break;
-      case 'intermediate':
-        result = calculateIntermediateAnalysis(data);
-        break;
-      case 'advanced':
-        result = calculateAdvancedAnalysis(data);
-        break;
-    }
-    setAnalysis(result);
-  }, [data, selectedMethod]);
+    const calculateAndSave = async () => {
+      let result: RetirementAnalysis;
+      switch (selectedMethod) {
+        case 'basic':
+          result = calculateBasicAnalysis(data);
+          break;
+        case 'intermediate':
+          result = calculateIntermediateAnalysis(data);
+          break;
+        case 'advanced':
+          result = calculateAdvancedAnalysis(data);
+          break;
+      }
+      setAnalysis(result);
+
+      if (user?.id) {
+        try {
+          await retirementDataService.saveAnalysisResults(user.id, result);
+        } catch (error) {
+          console.error('Error saving analysis results:', error);
+        }
+      }
+    };
+
+    calculateAndSave();
+  }, [data, selectedMethod, user?.id]);
 
   const handleExportPDF = () => {
     if (analysis) {
