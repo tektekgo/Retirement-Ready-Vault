@@ -60,10 +60,6 @@ export const LandingPage: React.FC = () => {
     navigate('/wizard');
   };
 
-  const handleViewDashboard = () => {
-    navigate('/dashboard');
-  };
-
   const handleExportPDF = () => {
     if (existingData) {
       const analysis = calculateBasicAnalysis(existingData);
