@@ -70,13 +70,13 @@ export const RetirementDashboard: React.FC = () => {
   }, [data, selectedMethod, user?.id]);
 
   const handleExportPDF = () => {
-    if (analysis) {
+    if (analysis && data) {
       exportToPDF(data, analysis);
     }
   };
 
   const handleExportCSV = () => {
-    if (analysis) {
+    if (analysis && data) {
       exportToCSV(data, analysis);
     }
   };

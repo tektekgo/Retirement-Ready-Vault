@@ -16,7 +16,9 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  if (loading) {
+  // Only show loading spinner on protected routes during initial auth check
+  // Public routes (login/register) handle their own loading states
+  if (loading && requireAuth) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-navy-50">
         <div className="text-center">
