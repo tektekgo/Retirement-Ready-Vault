@@ -46,7 +46,12 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
   // Banner should always be visible (just collapsed by default) - handle it first
   if (variant === 'banner') {
     return (
-      <div className="bg-blue-50 border-l-4 border-blue-500 mb-6 rounded-lg overflow-hidden transition-all duration-300" style={{ display: 'block' }}>
+      <div 
+        className="bg-blue-50 border-l-4 border-blue-500 mb-6 rounded-lg overflow-hidden transition-all duration-300" 
+        style={{ display: 'block', visibility: 'visible', opacity: 1 }}
+        role="region"
+        aria-label="Privacy notice"
+      >
         <div 
           className="p-4 cursor-pointer hover:bg-blue-100 transition-colors"
           onClick={handleBannerToggle}
