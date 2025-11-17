@@ -16,9 +16,21 @@ export const LandingPage: React.FC = () => {
   const [existingData, setExistingData] = React.useState<RetirementData | null>(null);
 
   React.useEffect(() => {
+    let isMounted = true;
+
+    // Safety timeout to ensure loading state is cleared
+    const safetyTimeout = setTimeout(() => {
+      if (isMounted) {
+        setLoading(false);
+      }
+    }, 300); // Fast timeout
+
     const checkExistingData = async () => {
       if (!user?.id) {
-        setLoading(false);
+        if (isMounted) {
+          clearTimeout(safetyTimeout);
+          setLoading(false);
+        }
         return;
       }
 
@@ -35,9 +47,12 @@ export const LandingPage: React.FC = () => {
               Object.values(parsed.data.expenses?.essential || {}).some((v: any) => v > 0) ||
               Object.values(parsed.data.expenses?.discretionary || {}).some((v: any) => v > 0)
             )) {
-              setHasExistingData(true);
-              setExistingData(parsed.data);
-              setLoading(false);
+              if (isMounted) {
+                setHasExistingData(true);
+                setExistingData(parsed.data);
+                clearTimeout(safetyTimeout);
+                setLoading(false);
+              }
               return; // Found data in localStorage, skip database check
             }
           } catch (e) {
@@ -45,26 +60,49 @@ export const LandingPage: React.FC = () => {
           }
         }
 
-        // Check database
-        const data = await retirementDataService.loadUserData(user.id);
-        // Check if data exists and has been initialized (not just empty object)
-        if (data && (
-          data.personalInfo.age > 0 || 
-          Object.keys(data.assets).some(key => data.assets[key as keyof typeof data.assets] > 0) ||
-          Object.values(data.expenses.essential).some(v => v > 0) ||
-          Object.values(data.expenses.discretionary).some(v => v > 0)
-        )) {
-          setHasExistingData(true);
-          setExistingData(data);
+        // Clear loading immediately - don't wait for database
+        if (isMounted) {
+          clearTimeout(safetyTimeout);
+          setLoading(false);
+        }
+
+        // Check database in background (non-blocking)
+        try {
+          const data = await Promise.race([
+            retirementDataService.loadUserData(user.id),
+            new Promise<RetirementData | null>((resolve) => setTimeout(() => resolve(null), 2000))
+          ]);
+          
+          if (!isMounted) return;
+          
+          // Check if data exists and has been initialized (not just empty object)
+          if (data && (
+            data.personalInfo.age > 0 || 
+            Object.keys(data.assets).some(key => data.assets[key as keyof typeof data.assets] > 0) ||
+            Object.values(data.expenses.essential).some(v => v > 0) ||
+            Object.values(data.expenses.discretionary).some(v => v > 0)
+          )) {
+            setHasExistingData(true);
+            setExistingData(data);
+          }
+        } catch (error) {
+          console.error('Error loading existing data:', error);
         }
       } catch (error) {
         console.error('Error loading existing data:', error);
-      } finally {
-        setLoading(false);
+        if (isMounted) {
+          clearTimeout(safetyTimeout);
+          setLoading(false);
+        }
       }
     };
 
     checkExistingData();
+
+    return () => {
+      isMounted = false;
+      clearTimeout(safetyTimeout);
+    };
   }, [user?.id]);
 
   const handleLogout = async () => {
