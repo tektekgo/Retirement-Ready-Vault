@@ -62,9 +62,19 @@ Create a `.env.local` file in the root directory with:
 ```
 VITE_SUPABASE_URL=your-supabase-project-url
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_INVITE_CODES=your-invite-code-here
 ```
 
-**Note**: The app will start without Supabase credentials, but authentication features will not work until configured.
+**Environment Variables:**
+- `VITE_SUPABASE_URL` - Your Supabase project URL (required for auth)
+- `VITE_SUPABASE_ANON_KEY` - Your Supabase anonymous key (required for auth)
+- `VITE_INVITE_CODES` - Invite code(s) to restrict registration (optional, comma-separated for multiple codes)
+
+**Notes:**
+- The app will start without Supabase credentials, but authentication features will not work until configured.
+- If `VITE_INVITE_CODES` is not set, registration will be open to everyone (for development).
+- For production on Vercel, set `VITE_INVITE_CODES` in Vercel environment variables to restrict access.
+- See `docs/INVITE_CODE_SETUP.md` for detailed invite code setup instructions.
 
 4. Start the development server:
 ```bash

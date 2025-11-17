@@ -5,6 +5,8 @@ import { retirementDataService } from '../../services/retirementData.service';
 import { RetirementData } from '../../types';
 import { exportToPDF, exportToCSV } from '../../services/export';
 import { calculateBasicAnalysis } from '../../services/retirementCalculations';
+import { PrivacyNotice } from '../common/PrivacyNotice';
+import { clearAllUserData } from '../../utils/dataManagement';
 
 export const LandingPage: React.FC = () => {
   const { signOut, user } = useAuth();
@@ -21,8 +23,37 @@ export const LandingPage: React.FC = () => {
       }
 
       try {
+        // Check localStorage first (synchronous) to avoid flash
+        const localDataKey = `retirementWizardData_${user.id}`;
+        const localData = localStorage.getItem(localDataKey);
+        if (localData) {
+          try {
+            const parsed = JSON.parse(localData);
+            if (parsed.data && parsed.userId === user.id && (
+              parsed.data.personalInfo?.age > 0 || 
+              Object.keys(parsed.data.assets || {}).some(key => parsed.data.assets[key] > 0) ||
+              Object.values(parsed.data.expenses?.essential || {}).some((v: any) => v > 0) ||
+              Object.values(parsed.data.expenses?.discretionary || {}).some((v: any) => v > 0)
+            )) {
+              setHasExistingData(true);
+              setExistingData(parsed.data);
+              setLoading(false);
+              return; // Found data in localStorage, skip database check
+            }
+          } catch (e) {
+            // Continue to database check
+          }
+        }
+
+        // Check database
         const data = await retirementDataService.loadUserData(user.id);
-        if (data && data.personalInfo.age > 0) {
+        // Check if data exists and has been initialized (not just empty object)
+        if (data && (
+          data.personalInfo.age > 0 || 
+          Object.keys(data.assets).some(key => data.assets[key as keyof typeof data.assets] > 0) ||
+          Object.values(data.expenses.essential).some(v => v > 0) ||
+          Object.values(data.expenses.discretionary).some(v => v > 0)
+        )) {
           setHasExistingData(true);
           setExistingData(data);
         }
@@ -39,8 +70,12 @@ export const LandingPage: React.FC = () => {
   const handleLogout = async () => {
     try {
       await signOut();
+      // Navigate to login immediately after logout
+      navigate('/login', { replace: true });
     } catch (error) {
       console.error('Error signing out:', error);
+      // Navigate anyway even if there's an error
+      navigate('/login', { replace: true });
     }
   };
 
@@ -51,13 +86,45 @@ export const LandingPage: React.FC = () => {
   const handleStartNewWizard = async () => {
     if (user?.id) {
       try {
-        await retirementDataService.deleteUserData(user.id);
-        localStorage.removeItem('retirementWizardData');
+        await clearAllUserData({
+          userId: user.id,
+          clearLocalStorage: true,
+          clearDatabase: true,
+        });
       } catch (error) {
         console.error('Error deleting existing data:', error);
       }
     }
     navigate('/wizard');
+  };
+
+  const handleClearAllData = async () => {
+    if (!window.confirm(
+      'Are you sure you want to clear all your retirement planning data? This action cannot be undone.\n\n' +
+      'This will delete:\n' +
+      '- All data saved in your browser\n' +
+      '- All data saved in our database (if logged in)\n\n' +
+      'You can still use the app - just start fresh!'
+    )) {
+      return;
+    }
+
+    try {
+      await clearAllUserData({
+        userId: user?.id,
+        clearLocalStorage: true,
+        clearDatabase: true,
+      });
+      
+      // Reset state
+      setHasExistingData(false);
+      setExistingData(null);
+      
+      alert('All data has been cleared successfully. You can start fresh anytime!');
+    } catch (error) {
+      console.error('Error clearing data:', error);
+      alert('There was an error clearing your data. Please try again or contact support.');
+    }
   };
 
   const handleExportPDF = () => {
@@ -118,6 +185,8 @@ export const LandingPage: React.FC = () => {
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="max-w-4xl w-full">
+          <PrivacyNotice variant="modal" />
+          
           <div className="text-center mb-8">
             <h2 className="font-heading text-3xl font-bold text-navy-900 mb-2">
               Welcome to Retirement Ready Vault
@@ -127,6 +196,10 @@ export const LandingPage: React.FC = () => {
                 ? 'You have existing retirement planning data. What would you like to do?'
                 : 'Start planning your retirement journey today'}
             </p>
+          </div>
+
+          <div className="mb-6">
+            <PrivacyNotice variant="banner" />
           </div>
 
           {hasExistingData ? (
@@ -171,19 +244,25 @@ export const LandingPage: React.FC = () => {
                   <h3 className="font-heading text-xl font-bold text-navy-900 mb-2">
                     Export Your Data
                   </h3>
-                  <p className="text-charcoal-600 mb-6">
-                    Download your retirement plan and analysis as PDF or CSV
+                  <p className="text-charcoal-600 mb-4 text-sm">
+                    Download your retirement plan and analysis
                   </p>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => navigate('/dashboard')}
+                      className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                    >
+                      View Dashboard & Export
+                    </button>
                     <button
                       onClick={handleExportPDF}
-                      className="w-full px-6 py-3 bg-coral-600 text-white rounded-lg hover:bg-coral-700 transition-colors font-medium"
+                      className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium text-sm"
                     >
-                      Export as PDF
+                      Export Report as PDF (Text Only)
                     </button>
                     <button
                       onClick={handleExportCSV}
-                      className="w-full px-6 py-3 bg-coral-100 text-coral-700 rounded-lg hover:bg-coral-200 transition-colors font-medium"
+                      className="w-full px-4 py-2 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors font-medium text-sm"
                     >
                       Export as CSV
                     </button>
@@ -204,12 +283,25 @@ export const LandingPage: React.FC = () => {
                   <p className="text-charcoal-600 mb-6">
                     Delete your existing data and create a new retirement plan from scratch
                   </p>
-                  <button
-                    onClick={handleStartNewWizard}
-                    className="px-6 py-3 bg-charcoal-600 text-white rounded-lg hover:bg-charcoal-700 transition-colors font-medium"
-                  >
-                    Start New Plan
-                  </button>
+                  <div className="space-y-3">
+                    <button
+                      onClick={handleStartNewWizard}
+                      className="px-6 py-3 bg-charcoal-600 text-white rounded-lg hover:bg-charcoal-700 transition-colors font-medium"
+                    >
+                      Start New Plan
+                    </button>
+                    <div className="pt-2 border-t border-gray-200">
+                      <button
+                        onClick={handleClearAllData}
+                        className="px-4 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors font-medium"
+                      >
+                        Clear All Data
+                      </button>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Permanently delete all your data from browser and database
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -223,15 +315,28 @@ export const LandingPage: React.FC = () => {
               <h3 className="font-heading text-2xl font-bold text-navy-900 mb-4">
                 Start Your Retirement Plan
               </h3>
-              <p className="text-charcoal-600 mb-8">
+              <p className="text-charcoal-600 mb-6">
                 Complete our 5-step wizard to create a comprehensive retirement plan with personalized analysis
               </p>
-              <button
-                onClick={handleContinueWizard}
-                className="px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
-              >
-                Begin Planning
-              </button>
+              <div className="mb-6">
+                <PrivacyNotice variant="inline" showDismiss={false} />
+              </div>
+              <div className="space-y-3">
+                <button
+                  onClick={handleContinueWizard}
+                  className="w-full px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
+                >
+                  Begin Planning
+                </button>
+                {user?.id && (
+                  <button
+                    onClick={handleClearAllData}
+                    className="w-full px-4 py-2 text-sm text-gray-600 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    Clear Any Existing Data
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>

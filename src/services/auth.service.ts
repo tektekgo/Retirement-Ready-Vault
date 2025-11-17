@@ -8,12 +8,15 @@ export class AuthService {
       throw new Error('Supabase is not configured. Please set up your environment variables.');
     }
     
+    // Use VITE_APP_URL if available, otherwise fall back to window.location.origin
+    const appUrl = import.meta.env.VITE_APP_URL || window.location.origin;
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: metadata,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${appUrl}/auth/callback`,
       },
     });
 
@@ -42,10 +45,13 @@ export class AuthService {
       throw new Error('Supabase is not configured. Please set up your environment variables.');
     }
 
+    // Use VITE_APP_URL if available, otherwise fall back to window.location.origin
+    const appUrl = import.meta.env.VITE_APP_URL || window.location.origin;
+
     const { data, error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${appUrl}/auth/callback`,
       },
     });
 
@@ -54,13 +60,44 @@ export class AuthService {
   }
 
   async signOut() {
-    const { error } = await supabase.auth.signOut();
+    // Clear user-specific retirement data before signing out
+    const storageKeys = Object.keys(localStorage);
+    storageKeys.forEach(key => {
+      if (key.startsWith('retirementWizardData_')) {
+        localStorage.removeItem(key);
+      }
+    });
+
+    if (!isSupabaseConfigured) {
+      // If Supabase not configured, clear any potential auth tokens
+      storageKeys.forEach(key => {
+        if (key.includes('supabase') || key.includes('sb-') || key.includes('auth')) {
+          localStorage.removeItem(key);
+        }
+      });
+      return;
+    }
+
+    // Sign out and clear all session data
+    const { error } = await supabase.auth.signOut({ scope: 'global' });
     if (error) throw error;
+    
+    // Ensure session is cleared from storage
+    // Supabase should do this automatically, but we'll be extra sure
+    const remainingKeys = Object.keys(localStorage);
+    remainingKeys.forEach(key => {
+      if (key.includes('supabase') || key.includes('sb-')) {
+        localStorage.removeItem(key);
+      }
+    });
   }
 
   async resetPassword(email: string) {
+    // Use VITE_APP_URL if available, otherwise fall back to window.location.origin
+    const appUrl = import.meta.env.VITE_APP_URL || window.location.origin;
+
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
+      redirectTo: `${appUrl}/auth/reset-password`,
     });
 
     if (error) throw error;
@@ -190,12 +227,9 @@ export class AuthService {
 
   onAuthStateChange(callback: (event: string, session: Session | null) => void) {
     if (!isSupabaseConfigured) {
-      // Return a mock subscription that immediately calls callback with null session
-      // Use requestAnimationFrame to ensure it fires after React's initial render
-      // This prevents the callback from interfering with the initial loading state
-      requestAnimationFrame(() => {
-        callback('INITIAL_SESSION', null);
-      });
+      // Return a mock subscription that calls callback synchronously with null session
+      // Call it immediately to clear loading state fast
+      callback('INITIAL_SESSION', null);
       
       return {
         data: {

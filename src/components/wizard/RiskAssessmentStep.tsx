@@ -1,11 +1,13 @@
 import React from 'react';
 
 interface RiskAssessmentStepProps {
+  onChange: (riskTolerance: number) => void;
   onComplete: () => void;
   onBack: () => void;
+  saving?: boolean;
 }
 
-export const RiskAssessmentStep: React.FC<RiskAssessmentStepProps> = ({ onComplete, onBack }) => {
+export const RiskAssessmentStep: React.FC<RiskAssessmentStepProps> = ({ onChange, onComplete, onBack, saving = false }) => {
   const [answers, setAnswers] = React.useState<Record<string, number>>({});
 
   const questions = [
@@ -51,10 +53,27 @@ export const RiskAssessmentStep: React.FC<RiskAssessmentStepProps> = ({ onComple
     },
   ];
 
+  const calculateRiskTolerance = (answers: Record<string, number>): number => {
+    const values = Object.values(answers);
+    if (values.length === 0) return 5; // Default
+    
+    // Calculate average and scale to 1-10 range
+    const average = values.reduce((sum, val) => sum + val, 0) / values.length;
+    // Answers are on 1-7 scale, convert to 1-10 scale
+    const scaled = Math.round(((average - 1) / 6) * 9 + 1);
+    return Math.max(1, Math.min(10, scaled));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (Object.keys(answers).length === questions.length) {
-      onComplete();
+      // Calculate and update risk tolerance before completing
+      const riskTolerance = calculateRiskTolerance(answers);
+      onChange(riskTolerance);
+      // Use setTimeout to ensure state update is processed before calling onComplete
+      setTimeout(() => {
+        onComplete();
+      }, 0);
     }
   };
 
@@ -109,14 +128,24 @@ export const RiskAssessmentStep: React.FC<RiskAssessmentStepProps> = ({ onComple
         </button>
         <button
           type="submit"
-          disabled={!allQuestionsAnswered}
-          className={`px-6 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-            allQuestionsAnswered
+          disabled={!allQuestionsAnswered || saving}
+          className={`px-6 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center ${
+            allQuestionsAnswered && !saving
               ? 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
         >
-          Complete
+          {saving ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Saving...
+            </>
+          ) : (
+            'Complete'
+          )}
         </button>
       </div>
     </form>
