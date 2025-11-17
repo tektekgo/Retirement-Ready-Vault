@@ -22,19 +22,21 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
 
   // Check if user already dismissed (within 30 days)
   React.useEffect(() => {
-    if (variant === 'modal') {
-      const dismissed = localStorage.getItem('privacyNoticeDismissed');
-      if (dismissed) {
-        const dismissedTime = parseInt(dismissed, 10);
-        const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-        if (Date.now() - dismissedTime < thirtyDays) {
-          setIsOpen(false);
-        }
+    const dismissed = localStorage.getItem('privacyNoticeDismissed');
+    if (dismissed) {
+      const dismissedTime = parseInt(dismissed, 10);
+      const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+      if (Date.now() - dismissedTime < thirtyDays) {
+        setIsOpen(false);
       }
     }
   }, [variant]);
 
   if (!isOpen && variant === 'modal') {
+    return null;
+  }
+
+  if (!isOpen && variant === 'banner') {
     return null;
   }
 

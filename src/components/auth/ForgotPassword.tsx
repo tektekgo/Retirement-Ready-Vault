@@ -62,7 +62,7 @@ export const ForgotPassword: React.FC = () => {
         <div className="bg-white rounded-card shadow-card p-8">
           <div className="text-center mb-8">
             <img 
-              src="/src/assets/ai-focus-logo.png" 
+              src="/ai-focus-logo.png" 
               alt="AI Focus" 
               className="h-16 mx-auto mb-4"
             />

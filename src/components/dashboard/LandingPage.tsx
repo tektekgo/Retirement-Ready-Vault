@@ -158,7 +158,7 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
-              src="/src/assets/ai-focus-logo.png" 
+              src="/ai-focus-logo.png" 
               alt="AI Focus" 
               className="h-10"
             />
