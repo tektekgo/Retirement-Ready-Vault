@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import Papa from 'papaparse';
+import html2canvas from 'html2canvas';
 import { RetirementData, RetirementAnalysis } from '../types';
 
 export const exportToPDF = (data: RetirementData, analysis: RetirementAnalysis): void => {
@@ -94,6 +95,75 @@ export const exportToPDF = (data: RetirementData, analysis: RetirementAnalysis):
   });
   
   doc.save('retirement-analysis.pdf');
+};
+
+export const exportDashboardToPDF = async (dashboardElementId: string = 'dashboard-content'): Promise<void> => {
+  const element = document.getElementById(dashboardElementId);
+  if (!element) {
+    console.error('Dashboard element not found');
+    return;
+  }
+
+  try {
+    // Show loading indicator
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.id = 'pdf-export-loading';
+    loadingIndicator.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      color: white;
+      font-size: 18px;
+    `;
+    loadingIndicator.textContent = 'Generating PDF...';
+    document.body.appendChild(loadingIndicator);
+
+    // Capture the dashboard as an image
+    const canvas = await html2canvas(element, {
+      scale: 2, // Higher quality
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#f0f4f8', // Match the dashboard background
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    });
+
+    // Remove loading indicator
+    document.body.removeChild(loadingIndicator);
+
+    const imgData = canvas.toDataURL('image/png');
+    const imgWidth = 210; // A4 width in mm
+    const pageHeight = 297; // A4 height in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    
+    const doc = new jsPDF('p', 'mm', 'a4');
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    // Add first page
+    doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    // Add additional pages if needed
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      doc.addPage();
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    doc.save('retirement-dashboard.pdf');
+  } catch (error) {
+    console.error('Error exporting dashboard to PDF:', error);
+    alert('Failed to export dashboard. Please try again.');
+  }
 };
 
 export const exportToCSV = (data: RetirementData, analysis: RetirementAnalysis): void => {

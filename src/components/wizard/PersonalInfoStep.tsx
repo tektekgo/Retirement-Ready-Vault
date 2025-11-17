@@ -48,6 +48,21 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ data, onChan
       </div>
 
       <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+          Full Name (Optional)
+        </label>
+        <input
+          id="name"
+          type="text"
+          value={data.name || ''}
+          onChange={(e) => onChange({ ...data, name: e.target.value })}
+          placeholder="Enter your full name"
+          className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
+        />
+        <p className="mt-1 text-xs text-gray-500">This will appear on your retirement report</p>
+      </div>
+
+      <div>
         <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
           Current Age *
         </label>

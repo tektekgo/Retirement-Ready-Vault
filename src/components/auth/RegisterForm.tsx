@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { validateInviteCode } from '../../utils/inviteCode';
 
 export const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,10 +9,17 @@ export const RegisterForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [inviteCode, setInviteCode] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const { signUp } = useAuth();
+  
+  // Check if invite code is required
+  const inviteCodeRequired = (() => {
+    const envCodes = import.meta.env.VITE_INVITE_CODES || '';
+    return envCodes && envCodes.trim() !== '';
+  })();
 
   const validatePassword = (pwd: string): string | null => {
     if (pwd.length < 8) return 'Password must be at least 8 characters long';
@@ -35,6 +43,19 @@ export const RegisterForm: React.FC = () => {
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
+    }
+
+    // Validate invite code if required
+    if (inviteCodeRequired) {
+      if (!inviteCode || inviteCode.trim() === '') {
+        setError('Invite code is required to create an account');
+        return;
+      }
+      
+      if (!validateInviteCode(inviteCode)) {
+        setError('Invalid invite code. Please check your code and try again.');
+        return;
+      }
     }
 
     setLoading(true);
@@ -117,6 +138,7 @@ export const RegisterForm: React.FC = () => {
                 <input
                   id="firstName"
                   type="text"
+                  autoComplete="given-name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
@@ -131,6 +153,7 @@ export const RegisterForm: React.FC = () => {
                 <input
                   id="lastName"
                   type="text"
+                  autoComplete="family-name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
@@ -146,6 +169,7 @@ export const RegisterForm: React.FC = () => {
               <input
                 id="email"
                 type="email"
+                autoComplete="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -154,6 +178,26 @@ export const RegisterForm: React.FC = () => {
               />
             </div>
 
+            {inviteCodeRequired && (
+              <div>
+                <label htmlFor="inviteCode" className="block text-sm font-medium text-charcoal-700 mb-2">
+                  Invite Code <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="inviteCode"
+                  type="text"
+                  required
+                  value={inviteCode}
+                  onChange={(e) => setInviteCode(e.target.value)}
+                  className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
+                  placeholder="Enter your invite code"
+                />
+                <p className="mt-2 text-xs text-charcoal-500">
+                  This is a private application. Please contact the administrator for an invite code.
+                </p>
+              </div>
+            )}
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-charcoal-700 mb-2">
                 Password
@@ -161,6 +205,7 @@ export const RegisterForm: React.FC = () => {
               <input
                 id="password"
                 type="password"
+                autoComplete="new-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -179,6 +224,7 @@ export const RegisterForm: React.FC = () => {
               <input
                 id="confirmPassword"
                 type="password"
+                autoComplete="new-password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}

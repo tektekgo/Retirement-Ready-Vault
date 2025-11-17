@@ -1,15 +1,22 @@
-import { supabase } from './supabase';
+import { supabase, isSupabaseConfigured } from './supabase';
 import { UserProfile, UserMetadata } from '../types/auth.types';
 import { Session } from '@supabase/supabase-js';
 
 export class AuthService {
   async signUp(email: string, password: string, metadata?: UserMetadata) {
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase is not configured. Please set up your environment variables.');
+    }
+    
+    // Use VITE_APP_URL if available, otherwise fall back to window.location.origin
+    const appUrl = import.meta.env.VITE_APP_URL || window.location.origin;
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: metadata,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${appUrl}/auth/callback`,
       },
     });
 
@@ -20,6 +27,10 @@ export class AuthService {
   }
 
   async signIn(email: string, password: string) {
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase is not configured. Please set up your environment variables.');
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -30,10 +41,17 @@ export class AuthService {
   }
 
   async signInWithMagicLink(email: string) {
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase is not configured. Please set up your environment variables.');
+    }
+
+    // Use VITE_APP_URL if available, otherwise fall back to window.location.origin
+    const appUrl = import.meta.env.VITE_APP_URL || window.location.origin;
+
     const { data, error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: `${appUrl}/auth/callback`,
       },
     });
 
@@ -42,13 +60,44 @@ export class AuthService {
   }
 
   async signOut() {
-    const { error } = await supabase.auth.signOut();
+    // Clear user-specific retirement data before signing out
+    const storageKeys = Object.keys(localStorage);
+    storageKeys.forEach(key => {
+      if (key.startsWith('retirementWizardData_')) {
+        localStorage.removeItem(key);
+      }
+    });
+
+    if (!isSupabaseConfigured) {
+      // If Supabase not configured, clear any potential auth tokens
+      storageKeys.forEach(key => {
+        if (key.includes('supabase') || key.includes('sb-') || key.includes('auth')) {
+          localStorage.removeItem(key);
+        }
+      });
+      return;
+    }
+
+    // Sign out and clear all session data
+    const { error } = await supabase.auth.signOut({ scope: 'global' });
     if (error) throw error;
+    
+    // Ensure session is cleared from storage
+    // Supabase should do this automatically, but we'll be extra sure
+    const remainingKeys = Object.keys(localStorage);
+    remainingKeys.forEach(key => {
+      if (key.includes('supabase') || key.includes('sb-')) {
+        localStorage.removeItem(key);
+      }
+    });
   }
 
   async resetPassword(email: string) {
+    // Use VITE_APP_URL if available, otherwise fall back to window.location.origin
+    const appUrl = import.meta.env.VITE_APP_URL || window.location.origin;
+
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
+      redirectTo: `${appUrl}/auth/reset-password`,
     });
 
     if (error) throw error;
@@ -80,6 +129,19 @@ export class AuthService {
   }
 
   async getUserProfile(userId: string): Promise<UserProfile | null> {
+    if (!isSupabaseConfigured) {
+      // Return a mock profile when Supabase is not configured
+      return {
+        id: userId,
+        email: '',
+        first_name: undefined,
+        last_name: undefined,
+        phone_number: undefined,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+    }
+
     const { data, error } = await supabase
       .from('user_profiles')
       .select('*')
@@ -97,6 +159,19 @@ export class AuthService {
   }
 
   async ensureUserProfile(userId: string, email: string, metadata?: UserMetadata): Promise<UserProfile> {
+    if (!isSupabaseConfigured) {
+      // Return a mock profile when Supabase is not configured
+      return {
+        id: userId,
+        email: email || '',
+        first_name: metadata?.first_name,
+        last_name: metadata?.last_name,
+        phone_number: metadata?.phone_number,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+    }
+
     const existingProfile = await this.getUserProfile(userId);
     
     if (existingProfile) {
@@ -107,6 +182,19 @@ export class AuthService {
   }
 
   async createUserProfile(userId: string, email: string, metadata?: UserMetadata): Promise<UserProfile> {
+    if (!isSupabaseConfigured) {
+      // Return a mock profile when Supabase is not configured
+      return {
+        id: userId,
+        email: email || '',
+        first_name: metadata?.first_name,
+        last_name: metadata?.last_name,
+        phone_number: metadata?.phone_number,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+    }
+
     const profile: Partial<UserProfile> = {
       id: userId,
       email,
@@ -138,13 +226,40 @@ export class AuthService {
   }
 
   onAuthStateChange(callback: (event: string, session: Session | null) => void) {
+    if (!isSupabaseConfigured) {
+      // Return a mock subscription that calls callback synchronously with null session
+      // Call it immediately to clear loading state fast
+      callback('INITIAL_SESSION', null);
+      
+      return {
+        data: {
+          subscription: {
+            unsubscribe: () => {},
+          },
+        },
+      };
+    }
+
     return supabase.auth.onAuthStateChange(callback);
   }
 
   async getSession() {
-    const { data: { session }, error } = await supabase.auth.getSession();
-    if (error) throw error;
-    return session;
+    if (!isSupabaseConfigured) {
+      // Return null session when Supabase is not configured
+      return null;
+    }
+
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) {
+        console.warn('Error getting session:', error);
+        return null;
+      }
+      return session;
+    } catch (error) {
+      console.warn('Error getting session:', error);
+      return null;
+    }
   }
 
   async getUser() {

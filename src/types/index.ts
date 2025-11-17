@@ -1,4 +1,5 @@
 export interface PersonalInfo {
+  name?: string;
   age: number;
   spouseAge?: number;
   targetRetirementAge: number;

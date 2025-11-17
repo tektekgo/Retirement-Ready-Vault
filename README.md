@@ -32,7 +32,7 @@ A secure retirement planning application that helps individuals organize and mai
 - **Styling**: Tailwind CSS
 - **Charts**: Chart.js with react-chartjs-2
 - **Export**: jsPDF, Papa Parse
-- **Backend**: Firebase (Firestore, Auth) - Ready for integration
+- **Backend**: Supabase (PostgreSQL, Auth, Storage) - Configure via environment variables
 
 ## Getting Started
 
@@ -54,9 +54,27 @@ npm install
 
 3. Set up environment variables:
 ```bash
-cp .env.example .env
+# Create .env.local file with your Supabase credentials
+# Get them from: https://app.supabase.com/project/_/settings/api
 ```
-Edit `.env` and add your Firebase configuration (optional for Phase 1).
+
+Create a `.env.local` file in the root directory with:
+```
+VITE_SUPABASE_URL=your-supabase-project-url
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_INVITE_CODES=your-invite-code-here
+```
+
+**Environment Variables:**
+- `VITE_SUPABASE_URL` - Your Supabase project URL (required for auth)
+- `VITE_SUPABASE_ANON_KEY` - Your Supabase anonymous key (required for auth)
+- `VITE_INVITE_CODES` - Invite code(s) to restrict registration (optional, comma-separated for multiple codes)
+
+**Notes:**
+- The app will start without Supabase credentials, but authentication features will not work until configured.
+- If `VITE_INVITE_CODES` is not set, registration will be open to everyone (for development).
+- For production on Vercel, set `VITE_INVITE_CODES` in Vercel environment variables to restrict access.
+- See `docs/INVITE_CODE_SETUP.md` for detailed invite code setup instructions.
 
 4. Start the development server:
 ```bash
