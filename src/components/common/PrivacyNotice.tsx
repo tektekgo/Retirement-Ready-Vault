@@ -43,11 +43,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
     }
   }, [variant]);
 
-  if (!isOpen && variant === 'modal') {
-    return null;
-  }
-
-  // Banner should always be visible (just collapsed by default)
+  // Banner should always be visible (just collapsed by default) - handle it first
   if (variant === 'banner') {
     return (
       <div className="bg-blue-50 border-l-4 border-blue-500 mb-6 rounded-lg overflow-hidden transition-all duration-300">
