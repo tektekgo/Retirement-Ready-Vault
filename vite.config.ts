@@ -12,6 +12,13 @@ export default defineConfig({
   server: {
     host: 'localhost',
     port: 5173,
+    strictPort: true,
+    hmr: {
+      host: 'localhost',
+      port: 5173,
+      clientPort: 5173,
+      protocol: 'ws',
+    },
     // HMR will automatically use the same port as the server
     // This prevents WebSocket errors when Vite switches to a different port
   },
