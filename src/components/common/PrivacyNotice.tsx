@@ -29,14 +29,16 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
     setIsExpanded(!isExpanded);
   };
 
-  // Check if user already dismissed (within 30 days)
+  // Check if user already dismissed modal (within 30 days) - only for modal variant
   React.useEffect(() => {
-    const dismissed = localStorage.getItem('privacyNoticeDismissed');
-    if (dismissed) {
-      const dismissedTime = parseInt(dismissed, 10);
-      const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-      if (Date.now() - dismissedTime < thirtyDays) {
-        setIsOpen(false);
+    if (variant === 'modal') {
+      const dismissed = localStorage.getItem('privacyNoticeDismissed');
+      if (dismissed) {
+        const dismissedTime = parseInt(dismissed, 10);
+        const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+        if (Date.now() - dismissedTime < thirtyDays) {
+          setIsOpen(false);
+        }
       }
     }
   }, [variant]);
@@ -45,10 +47,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
     return null;
   }
 
-  if (!isOpen && variant === 'banner') {
-    return null;
-  }
-
+  // Banner should always be visible (just collapsed by default)
   if (variant === 'banner') {
     return (
       <div className="bg-blue-50 border-l-4 border-blue-500 mb-6 rounded-lg overflow-hidden transition-all duration-300">
