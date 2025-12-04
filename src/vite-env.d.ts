@@ -8,8 +8,14 @@ interface ImportMetaEnv {
   readonly VITE_APP_URL: string
   readonly VITE_INVITE_CODES?: string
   readonly VITE_GIT_COMMIT_COUNT?: string
+  readonly DEV?: boolean
+  readonly PROD?: boolean
+  readonly MODE?: string
 }
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
+  readonly dev: boolean
+  readonly prod: boolean
+  readonly mode: string
 }

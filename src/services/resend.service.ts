@@ -29,7 +29,7 @@ export class ResendService {
       // Use our Vercel API route instead of calling Resend directly
       // This avoids CORS issues and keeps the API key server-side
       // For local dev: Use vercel dev to run API routes, or test on production
-      const apiUrl = import.meta.env.DEV 
+      const apiUrl = import.meta.dev 
         ? 'http://localhost:3000' // When using vercel dev
         : (import.meta.env.VITE_APP_URL || window.location.origin);
       
