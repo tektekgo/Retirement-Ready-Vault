@@ -23,35 +23,65 @@ export default {
           700: '#334e68',
           800: '#243b53',
           900: '#102a43',
-          950: '#0a1929', // Deep navy base
+          950: '#15314D', // Brand navy from logo
         },
         
-        blue: {
-          50: '#f0f7ff',
-          100: '#e0efff',
-          200: '#b8dcff',
-          300: '#8cc5ff',
-          400: '#5cadff',
-          500: '#336699', // Primary blue
-          600: '#2952a3',
-          700: '#1f3d7a',
-          800: '#162b52',
-          900: '#0d1a2b',
+        teal: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6', // Primary teal accent
+          600: '#0d9488', // Deeper teal
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+          950: '#042f2e',
         },
         
+        emerald: {
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981', // Alternative emerald
+          600: '#059669', // Primary emerald accent
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
+          950: '#022c22',
+        },
+        
+        slate: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b', // Warm gray secondary
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+        },
+        
+        // Keep coral for error states
         coral: {
           50: '#fff5f3',
           100: '#ffe8e3',
           200: '#ffd5cc',
           300: '#ffb8a8',
           400: '#ff9073',
-          500: '#ff6b47', // Primary coral
+          500: '#ff6b47',
           600: '#f04e2a',
           700: '#d63f1f',
           800: '#b3341d',
           900: '#942f1e',
         },
         
+        // Keep charcoal for text
         charcoal: {
           50: '#f8f9fa',
           100: '#e9ecef',
@@ -62,7 +92,7 @@ export default {
           600: '#495057',
           700: '#343a40',
           800: '#212529',
-          900: '#1a1d20', // Charcoal base
+          900: '#1a1d20',
         },
       },
       
@@ -81,9 +111,9 @@ export default {
       
       boxShadow: {
         'card': '0 2px 8px rgba(0, 0, 0, 0.08)',
-        'card-hover': '0 4px 16px rgba(0, 0, 0, 0.12)',
-        'button': '0 1px 3px rgba(0, 0, 0, 0.1)',
-        'input': '0 0 0 3px rgba(51, 102, 153, 0.1)',
+        'card-hover': '0 8px 24px rgba(0, 0, 0, 0.15)',
+        'button': '0 2px 4px rgba(0, 0, 0, 0.12)',
+        'input': '0 0 0 3px rgba(13, 148, 136, 0.1)',
       },
       
       transitionDuration: {
@@ -92,10 +122,10 @@ export default {
       },
       
       backgroundImage: {
-        'gradient-blue': 'linear-gradient(135deg, #336699 0%, #2952a3 100%)',
-        'gradient-coral': 'linear-gradient(135deg, #ff6b47 0%, #f04e2a 100%)',
-        'gradient-navy': 'linear-gradient(135deg, #243b53 0%, #102a43 100%)',
-        'gradient-duotone': 'linear-gradient(135deg, #336699 0%, #ff6b47 100%)',
+        'gradient-primary': 'linear-gradient(135deg, #15314D 0%, #0d9488 100%)',
+        'gradient-teal': 'linear-gradient(135deg, #0d9488 0%, #059669 100%)',
+        'gradient-navy': 'linear-gradient(135deg, #15314D 0%, #102a43 100%)',
+        'gradient-subtle': 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
       },
     },
   },

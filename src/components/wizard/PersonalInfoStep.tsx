@@ -57,7 +57,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ data, onChan
           value={data.name || ''}
           onChange={(e) => onChange({ ...data, name: e.target.value })}
           placeholder="Enter your full name"
-          className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-250"
+          className="w-full px-4 py-3 border border-charcoal-300 rounded-input focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-250"
         />
         <p className="mt-1 text-xs text-gray-500">This will appear on your retirement report</p>
       </div>
@@ -71,7 +71,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ data, onChan
           id="age"
           value={data.age || ''}
           onChange={(e) => onChange({ ...data, age: parseInt(e.target.value) || 0 })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           placeholder="Enter your age"
         />
         {errors.age && <p className="mt-1 text-sm text-red-600">{errors.age}</p>}
@@ -86,7 +86,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ data, onChan
           id="spouseAge"
           value={data.spouseAge || ''}
           onChange={(e) => onChange({ ...data, spouseAge: parseInt(e.target.value) || undefined })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           placeholder="Enter spouse age"
         />
         {errors.spouseAge && <p className="mt-1 text-sm text-red-600">{errors.spouseAge}</p>}
@@ -101,7 +101,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ data, onChan
           id="targetRetirementAge"
           value={data.targetRetirementAge || ''}
           onChange={(e) => onChange({ ...data, targetRetirementAge: parseInt(e.target.value) || 0 })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           placeholder="Enter target retirement age"
         />
         {errors.targetRetirementAge && <p className="mt-1 text-sm text-red-600">{errors.targetRetirementAge}</p>}
@@ -131,7 +131,7 @@ export const PersonalInfoStep: React.FC<PersonalInfoStepProps> = ({ data, onChan
       <div className="flex justify-end">
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           Next
         </button>

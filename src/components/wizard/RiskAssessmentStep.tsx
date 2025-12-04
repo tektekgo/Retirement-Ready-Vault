@@ -95,7 +95,7 @@ export const RiskAssessmentStep: React.FC<RiskAssessmentStepProps> = ({ onChange
             {question.options.map((option) => (
               <label
                 key={option.value}
-                className="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:bg-blue-50 cursor-pointer"
+                className="flex items-center p-3 bg-white rounded-lg border border-gray-200 hover:bg-teal-50 cursor-pointer"
               >
                 <input
                   type="radio"
@@ -103,7 +103,7 @@ export const RiskAssessmentStep: React.FC<RiskAssessmentStepProps> = ({ onChange
                   value={option.value}
                   checked={answers[question.id] === option.value}
                   onChange={() => setAnswers({ ...answers, [question.id]: option.value })}
-                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  className="w-4 h-4 text-teal-600 focus:ring-teal-500"
                 />
                 <span className="ml-3 text-gray-700">{option.text}</span>
               </label>
@@ -131,7 +131,7 @@ export const RiskAssessmentStep: React.FC<RiskAssessmentStepProps> = ({ onChange
           disabled={!allQuestionsAnswered || saving}
           className={`px-6 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 flex items-center ${
             allQuestionsAnswered && !saving
-              ? 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
+              ? 'bg-teal-600 text-white hover:bg-teal-700 focus:ring-teal-500'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
         >

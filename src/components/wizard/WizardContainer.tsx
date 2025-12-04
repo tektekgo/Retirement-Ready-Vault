@@ -259,33 +259,33 @@ export const WizardContainer: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-charcoal-600">Loading your retirement data...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading your retirement data...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-subtle flex flex-col">
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
-              src="/ai-focus-logo.png" 
+              src="/ai-focus-logo.svg" 
               alt="AI Focus" 
               className="h-10"
             />
             <div>
-              <h1 className="font-heading text-xl font-bold text-navy-900">Retirement Ready Vault</h1>
-              <p className="text-xs text-charcoal-600">Powered by AI-Focus.org</p>
+              <h1 className="font-heading text-xl font-bold text-slate-900 tracking-tight">Retirement Ready Vault</h1>
+              <p className="text-xs text-slate-600">Powered by AI-Focus.org</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
             {autoSaveStatus.saving && (
-              <span className="text-xs text-blue-600 flex items-center">
+              <span className="text-xs text-teal-600 flex items-center">
                 <svg className="animate-spin h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -298,13 +298,13 @@ export const WizardContainer: React.FC = () => {
             )}
             <button
               onClick={() => navigate('/home')}
-              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-teal-600 transition-colors duration-250"
             >
               Home
             </button>
             <button
               onClick={() => navigate('/dashboard')}
-              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-teal-600 transition-colors duration-250"
             >
               Dashboard
             </button>
@@ -315,7 +315,7 @@ export const WizardContainer: React.FC = () => {
             )}
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-teal-600 transition-colors duration-250"
             >
               Logout
             </button>
@@ -333,8 +333,8 @@ export const WizardContainer: React.FC = () => {
             <div className="mb-8">
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <h2 className="font-heading text-2xl font-bold text-navy-900 mb-2">Retirement Planning Wizard</h2>
-                  <p className="text-charcoal-600">Complete the wizard to analyze your retirement readiness</p>
+                  <h2 className="font-heading text-2xl font-bold text-slate-900 mb-2 tracking-tight">Retirement Planning Wizard</h2>
+                  <p className="text-slate-600">Complete the wizard to analyze your retirement readiness</p>
                 </div>
                 {user?.id && (
                   <button
@@ -370,7 +370,7 @@ export const WizardContainer: React.FC = () => {
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
                         index <= currentStep
-                          ? 'bg-blue-600 text-white'
+                          ? 'bg-teal-600 text-white'
                           : 'bg-gray-200 text-gray-600'
                       }`}
                     >
@@ -384,7 +384,7 @@ export const WizardContainer: React.FC = () => {
                   {index < steps.length - 1 && (
                     <div
                       className={`flex-1 h-1 mx-2 ${
-                        index < currentStep ? 'bg-blue-600' : 'bg-gray-200'
+                        index < currentStep ? 'bg-teal-600' : 'bg-gray-200'
                       }`}
                     />
                   )}

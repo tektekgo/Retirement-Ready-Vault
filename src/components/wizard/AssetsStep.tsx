@@ -49,7 +49,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
             id="retirement401k"
             value={data.retirement401k || ''}
             onChange={(e) => onChange({ ...data, retirement401k: parseFloat(e.target.value) || 0 })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder="0.00"
             step="0.01"
           />
@@ -63,7 +63,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
             id="iraTraditional"
             value={data.iraTraditional || ''}
             onChange={(e) => onChange({ ...data, iraTraditional: parseFloat(e.target.value) || 0 })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder="0.00"
             step="0.01"
           />
@@ -77,7 +77,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
             id="iraRoth"
             value={data.iraRoth || ''}
             onChange={(e) => onChange({ ...data, iraRoth: parseFloat(e.target.value) || 0 })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder="0.00"
             step="0.01"
           />
@@ -91,7 +91,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
             id="brokerage"
             value={data.brokerage || ''}
             onChange={(e) => onChange({ ...data, brokerage: parseFloat(e.target.value) || 0 })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder="0.00"
             step="0.01"
           />
@@ -105,7 +105,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
             id="savings"
             value={data.savings || ''}
             onChange={(e) => onChange({ ...data, savings: parseFloat(e.target.value) || 0 })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder="0.00"
             step="0.01"
           />
@@ -119,7 +119,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
             id="realEstate"
             value={data.realEstate || ''}
             onChange={(e) => onChange({ ...data, realEstate: parseFloat(e.target.value) || 0 })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder="0.00"
             step="0.01"
           />
@@ -133,7 +133,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
             id="other"
             value={data.other || ''}
             onChange={(e) => onChange({ ...data, other: parseFloat(e.target.value) || 0 })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             placeholder="0.00"
             step="0.01"
           />
@@ -158,7 +158,7 @@ export const AssetsStep: React.FC<AssetsStepProps> = ({ data, onChange, onNext, 
         </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           Next
         </button>

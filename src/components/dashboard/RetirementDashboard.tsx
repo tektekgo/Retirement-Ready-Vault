@@ -199,9 +199,9 @@ export const RetirementDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
           <p className="text-charcoal-600">Loading your retirement analysis...</p>
         </div>
       </div>
@@ -210,7 +210,7 @@ export const RetirementDashboard: React.FC = () => {
 
   if (!data || !analysis) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
         <div className="text-center max-w-md">
           <div className="bg-white rounded-lg shadow-md p-8">
             <h2 className="font-heading text-2xl font-bold text-navy-900 mb-4">No Data Yet</h2>
@@ -219,7 +219,7 @@ export const RetirementDashboard: React.FC = () => {
             </p>
             <button
               onClick={() => navigate('/wizard')}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
             >
               Start Planning
             </button>
@@ -234,24 +234,24 @@ export const RetirementDashboard: React.FC = () => {
   const totalAssets = Object.values(data.assets).reduce((a, b) => a + b, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-navy-50 to-blue-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-subtle flex flex-col">
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
-              src="/ai-focus-logo.png" 
+              src="/ai-focus-logo.svg" 
               alt="AI Focus" 
               className="h-10"
             />
             <div>
-              <h1 className="font-heading text-xl font-bold text-navy-900">Retirement Ready Vault</h1>
-              <p className="text-xs text-charcoal-600">Powered by AI-Focus.org</p>
+              <h1 className="font-heading text-xl font-bold text-slate-900 tracking-tight">Retirement Ready Vault</h1>
+              <p className="text-xs text-slate-600">Powered by AI-Focus.org</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
             <button
               onClick={() => navigate('/home')}
-              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-teal-600 transition-colors duration-250"
             >
               Home
             </button>
@@ -262,7 +262,7 @@ export const RetirementDashboard: React.FC = () => {
             )}
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-sm font-medium text-charcoal-700 hover:text-blue-600 transition-colors duration-250"
+              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-teal-600 transition-colors duration-250"
             >
               Logout
             </button>
@@ -279,8 +279,8 @@ export const RetirementDashboard: React.FC = () => {
           <div id="dashboard-content" className="bg-white rounded-card shadow-card p-8 mb-6">
             <div className="flex justify-between items-start mb-6">
               <div>
-                <h2 className="font-heading text-2xl font-bold text-navy-900">Retirement Analysis Dashboard</h2>
-                <p className="text-charcoal-600 mt-1">Your comprehensive retirement readiness report</p>
+                <h2 className="font-heading text-2xl font-bold text-slate-900 tracking-tight">Retirement Analysis Dashboard</h2>
+                <p className="text-slate-600 mt-1">Your comprehensive retirement readiness report</p>
                 {data?.personalInfo?.name && (
                   <p className="text-sm text-gray-600 mt-2">
                     Prepared for: <span className="font-semibold">{data.personalInfo.name}</span>
@@ -293,13 +293,13 @@ export const RetirementDashboard: React.FC = () => {
               <div className="flex gap-3">
                 <button
                   onClick={handleEditData}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-button hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-250"
+                  className="px-4 py-2 bg-teal-600 text-white rounded-button hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-250"
                 >
                   Edit Data
                 </button>
                 <button
                   onClick={handleReset}
-                  className="px-4 py-2 bg-charcoal-200 text-charcoal-700 rounded-button hover:bg-charcoal-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-250"
+                  className="px-4 py-2 bg-charcoal-200 text-charcoal-700 rounded-button hover:bg-charcoal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-250"
                 >
                   Start Over
                 </button>
@@ -321,7 +321,7 @@ export const RetirementDashboard: React.FC = () => {
                   onClick={() => setSelectedMethod('basic')}
                   className={`w-full px-4 py-2 rounded-lg font-medium relative ${
                     selectedMethod === 'basic'
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-teal-600 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -331,7 +331,7 @@ export const RetirementDashboard: React.FC = () => {
                   </svg>
                 </button>
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-72 p-3 bg-gray-900 text-white text-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
-                  <div className="font-semibold mb-1 text-blue-300">How it calculates:</div>
+                  <div className="font-semibold mb-1 text-teal-300">How it calculates:</div>
                   <div className="leading-relaxed">Uses 75% of your current expenses as required income. Divides your total savings by 30 years to estimate monthly income. Compares what you'll have vs. what you need.</div>
                   <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-900"></div>
                 </div>
@@ -341,7 +341,7 @@ export const RetirementDashboard: React.FC = () => {
                   onClick={() => setSelectedMethod('intermediate')}
                   className={`w-full px-4 py-2 rounded-lg font-medium relative ${
                     selectedMethod === 'intermediate'
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-teal-600 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -351,7 +351,7 @@ export const RetirementDashboard: React.FC = () => {
                   </svg>
                 </button>
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-72 p-3 bg-gray-900 text-white text-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
-                  <div className="font-semibold mb-1 text-blue-300">How it calculates:</div>
+                  <div className="font-semibold mb-1 text-teal-300">How it calculates:</div>
                   <div className="leading-relaxed">Uses 80% of current expenses as required income. Applies the 4% safe withdrawal rate to your savings (4% of total assets per year). Adds Social Security, pension, and other income sources.</div>
                   <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-900"></div>
                 </div>
@@ -361,7 +361,7 @@ export const RetirementDashboard: React.FC = () => {
                   onClick={() => setSelectedMethod('advanced')}
                   className={`w-full px-4 py-2 rounded-lg font-medium relative ${
                     selectedMethod === 'advanced'
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-teal-600 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -371,13 +371,13 @@ export const RetirementDashboard: React.FC = () => {
                   </svg>
                 </button>
                 <div className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-72 p-3 bg-gray-900 text-white text-sm rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
-                  <div className="font-semibold mb-1 text-blue-300">How it calculates:</div>
+                  <div className="font-semibold mb-1 text-teal-300">How it calculates:</div>
                   <div className="leading-relaxed">Runs 1,000 simulations with varying investment returns (4-10%) and inflation rates. Tests if your portfolio lasts 30 years in each scenario. Shows the percentage of successful outcomes as your readiness score.</div>
                   <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-900"></div>
                 </div>
               </div>
             </div>
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <div className="bg-teal-50 p-4 rounded-lg border border-teal-200">
               <div className="font-semibold text-gray-900 mb-2">
                 {selectedMethod === 'basic' && 'Basic Method (70-80% Rule)'}
                 {selectedMethod === 'intermediate' && 'Intermediate Method (4% Rule)'}
@@ -392,9 +392,9 @@ export const RetirementDashboard: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="bg-teal-50 p-4 rounded-lg">
               <div className="text-sm font-medium text-gray-600">Readiness Score</div>
-              <div className="text-3xl font-bold text-blue-600 mt-1">
+              <div className="text-3xl font-bold text-teal-600 mt-1">
                 {analysis.readinessScore.toFixed(1)}%
               </div>
             </div>
@@ -481,7 +481,7 @@ export const RetirementDashboard: React.FC = () => {
             <div className="flex gap-3">
               <button
                 onClick={handleExportDashboardPDF}
-                className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+                className="flex-1 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium"
               >
                 Export Dashboard as PDF
               </button>

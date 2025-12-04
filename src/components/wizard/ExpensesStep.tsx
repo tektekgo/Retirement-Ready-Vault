@@ -47,7 +47,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
         <p className="text-gray-600">Help us understand your current monthly spending.</p>
       </div>
 
-      <div className="bg-blue-50 p-4 rounded-lg">
+      <div className="bg-teal-50 p-4 rounded-lg">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Essential Expenses</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -59,7 +59,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="housing"
               value={data.essential.housing || ''}
               onChange={(e) => onChange({ ...data, essential: { ...data.essential, housing: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -73,7 +73,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="utilities"
               value={data.essential.utilities || ''}
               onChange={(e) => onChange({ ...data, essential: { ...data.essential, utilities: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -87,7 +87,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="food"
               value={data.essential.food || ''}
               onChange={(e) => onChange({ ...data, essential: { ...data.essential, food: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -101,7 +101,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="healthcare"
               value={data.essential.healthcare || ''}
               onChange={(e) => onChange({ ...data, essential: { ...data.essential, healthcare: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -115,7 +115,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="insurance"
               value={data.essential.insurance || ''}
               onChange={(e) => onChange({ ...data, essential: { ...data.essential, insurance: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -129,7 +129,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="debtPayments"
               value={data.essential.debtPayments || ''}
               onChange={(e) => onChange({ ...data, essential: { ...data.essential, debtPayments: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -153,7 +153,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="entertainment"
               value={data.discretionary.entertainment || ''}
               onChange={(e) => onChange({ ...data, discretionary: { ...data.discretionary, entertainment: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -167,7 +167,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="travel"
               value={data.discretionary.travel || ''}
               onChange={(e) => onChange({ ...data, discretionary: { ...data.discretionary, travel: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -181,7 +181,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="dining"
               value={data.discretionary.dining || ''}
               onChange={(e) => onChange({ ...data, discretionary: { ...data.discretionary, dining: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -195,7 +195,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="hobbies"
               value={data.discretionary.hobbies || ''}
               onChange={(e) => onChange({ ...data, discretionary: { ...data.discretionary, hobbies: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -209,7 +209,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
               id="other"
               value={data.discretionary.other || ''}
               onChange={(e) => onChange({ ...data, discretionary: { ...data.discretionary, other: parseFloat(e.target.value) || 0 } })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -237,7 +237,7 @@ export const ExpensesStep: React.FC<ExpensesStepProps> = ({ data, onChange, onNe
         </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           Next
         </button>

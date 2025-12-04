@@ -47,29 +47,29 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
   if (variant === 'banner') {
     return (
       <div 
-        className="bg-blue-50 border-l-4 border-blue-500 mb-6 rounded-lg overflow-hidden transition-all duration-300" 
+        className="bg-teal-50 border-l-4 border-teal-500 mb-6 rounded-lg overflow-hidden transition-all duration-300" 
         style={{ display: 'block', visibility: 'visible', opacity: 1 }}
         role="region"
         aria-label="Privacy notice"
       >
         <div 
-          className="p-4 cursor-pointer hover:bg-blue-100 transition-colors"
+          className="p-4 cursor-pointer hover:bg-teal-100 transition-colors"
           onClick={handleBannerToggle}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-start flex-1">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="h-5 w-5 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="ml-3 flex-1">
-                <h3 className="text-sm font-medium text-blue-800">Your Privacy Matters</h3>
+                <h3 className="text-sm font-medium text-teal-800">Your Privacy Matters</h3>
               </div>
             </div>
             <div className="ml-2">
               <svg 
-                className={`h-5 w-5 text-blue-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                className={`h-5 w-5 text-teal-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -81,10 +81,10 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
         </div>
         
         {isExpanded && (
-          <div className="px-4 pb-4 pt-0 border-t border-blue-200">
-            <div className="mt-4 text-sm text-blue-700 space-y-3">
-              <div className="bg-blue-100 border-l-4 border-blue-500 p-3 rounded">
-                <h4 className="font-semibold text-blue-900 mb-1">✨ You're in Control</h4>
+          <div className="px-4 pb-4 pt-0 border-t border-teal-200">
+            <div className="mt-4 text-sm text-teal-700 space-y-3">
+              <div className="bg-teal-100 border-l-4 border-teal-500 p-3 rounded">
+                <h4 className="font-semibold text-teal-900 mb-1">✨ You're in Control</h4>
                 <p className="text-sm">
                   You can use this application <strong>without saving your data</strong> if you prefer. 
                   Simply clear your data when you're done using the "Clear All Data" option available throughout the app.
@@ -92,7 +92,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
               </div>
 
               <div>
-                <h4 className="font-semibold text-blue-900 mb-2">How Your Data is Stored</h4>
+                <h4 className="font-semibold text-teal-900 mb-2">How Your Data is Stored</h4>
                 <ul className="list-disc list-inside space-y-1 ml-2">
                   <li>
                     <strong>Local Storage (Your Browser):</strong> Your retirement planning data is saved 
@@ -107,7 +107,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
               </div>
 
               <div>
-                <h4 className="font-semibold text-blue-900 mb-2">Your Privacy Rights</h4>
+                <h4 className="font-semibold text-teal-900 mb-2">Your Privacy Rights</h4>
                 <ul className="list-disc list-inside space-y-1 ml-2">
                   <li>
                     <strong>Clear Data Anytime:</strong> You can delete all your data at any time using 
@@ -135,7 +135,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
                       e.stopPropagation();
                       handleBannerCollapse();
                     }}
-                    className="text-sm font-medium text-blue-800 hover:text-blue-900 underline"
+                    className="text-sm font-medium text-teal-800 hover:text-teal-900 underline"
                   >
                     Got it, thanks!
                   </button>
@@ -152,7 +152,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
     return (
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 my-4">
         <h3 className="text-sm font-semibold text-gray-900 mb-2 flex items-center">
-          <svg className="h-5 w-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="h-5 w-5 text-teal-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
           </svg>
           Privacy & Data Storage
@@ -188,7 +188,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
             <div className="p-6">
               <div className="flex items-center mb-4">
                 <div className="flex-shrink-0">
-                  <svg className="h-8 w-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-8 w-8 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -196,8 +196,8 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
               </div>
 
               <div className="space-y-4 text-gray-700">
-                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-                  <h3 className="font-semibold text-blue-900 mb-2">✨ You're in Control</h3>
+                <div className="bg-teal-50 border-l-4 border-teal-500 p-4 rounded">
+                  <h3 className="font-semibold text-teal-900 mb-2">✨ You're in Control</h3>
                   <p className="text-sm">
                     You can use this application <strong>without saving your data</strong> if you prefer. 
                     Simply clear your data when you're done using the "Clear All Data" option available throughout the app.
@@ -263,7 +263,7 @@ export const PrivacyNotice: React.FC<PrivacyNoticeProps> = ({
                 <div className="mt-6 flex justify-end">
                   <button
                     onClick={handleDismiss}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+                    className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium"
                   >
                     I Understand, Continue
                   </button>

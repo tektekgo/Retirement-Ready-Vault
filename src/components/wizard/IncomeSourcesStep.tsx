@@ -48,7 +48,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
         <p className="text-gray-600">Tell us about your current and expected retirement income.</p>
       </div>
 
-      <div className="bg-blue-50 p-4 rounded-lg">
+      <div className="bg-teal-50 p-4 rounded-lg">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Income</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -60,7 +60,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
               id="currentSalary"
               value={data.currentSalary || ''}
               onChange={(e) => onChange({ ...data, currentSalary: parseFloat(e.target.value) || 0 })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -75,7 +75,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
               id="spouseSalary"
               value={data.spouseSalary || ''}
               onChange={(e) => onChange({ ...data, spouseSalary: parseFloat(e.target.value) || undefined })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -99,7 +99,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
                 ...data, 
                 socialSecuritySelf: { ...data.socialSecuritySelf, age: parseInt(e.target.value) || 0 }
               })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="67"
             />
             {errors.socialSecuritySelfAge && <p className="mt-1 text-sm text-red-600">{errors.socialSecuritySelfAge}</p>}
@@ -116,7 +116,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
                 ...data, 
                 socialSecuritySelf: { ...data.socialSecuritySelf, monthlyBenefit: parseFloat(e.target.value) || 0 }
               })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -143,7 +143,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
                   monthlyBenefit: data.socialSecuritySpouse?.monthlyBenefit || 0
                 }
               })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="67"
             />
           </div>
@@ -162,7 +162,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
                   monthlyBenefit: parseFloat(e.target.value) || 0
                 }
               })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -182,7 +182,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
               id="pension"
               value={data.pension || ''}
               onChange={(e) => onChange({ ...data, pension: parseFloat(e.target.value) || undefined })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -196,7 +196,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
               id="rentalIncome"
               value={data.rentalIncome || ''}
               onChange={(e) => onChange({ ...data, rentalIncome: parseFloat(e.target.value) || undefined })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -210,7 +210,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
               id="otherIncome"
               value={data.otherIncome || ''}
               onChange={(e) => onChange({ ...data, otherIncome: parseFloat(e.target.value) || undefined })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
               placeholder="0.00"
               step="0.01"
             />
@@ -228,7 +228,7 @@ export const IncomeSourcesStep: React.FC<IncomeSourcesStepProps> = ({ data, onCh
         </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
           Next
         </button>

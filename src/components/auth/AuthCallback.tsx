@@ -67,7 +67,7 @@ export const AuthCallback: React.FC = () => {
   }, [user, navigate, hasChecked]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-navy-50 to-blue-50">
+    <div className="min-h-screen flex flex-col bg-gradient-subtle">
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           {error ? (
@@ -77,15 +77,15 @@ export const AuthCallback: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-semibold text-charcoal-900 mb-2">Authentication Error</h2>
-              <p className="text-charcoal-600 mb-4">{error}</p>
-              <p className="text-sm text-charcoal-500">Redirecting to login...</p>
+            <h2 className="text-xl font-semibold text-slate-900 mb-2 tracking-tight">Authentication Error</h2>
+            <p className="text-slate-600 mb-4">{error}</p>
+            <p className="text-sm text-slate-500">Redirecting to login...</p>
             </>
           ) : (
             <>
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
-              <h2 className="text-xl font-semibold text-charcoal-900 mb-2">Completing sign in...</h2>
-              <p className="text-charcoal-600">Please wait while we verify your magic link.</p>
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mb-4"></div>
+            <h2 className="text-xl font-semibold text-slate-900 mb-2 tracking-tight">Completing sign in...</h2>
+            <p className="text-slate-600">Please wait while we verify your magic link.</p>
             </>
           )}
         </div>
