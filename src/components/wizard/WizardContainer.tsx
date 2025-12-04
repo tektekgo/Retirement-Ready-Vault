@@ -270,7 +270,7 @@ export const WizardContainer: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex flex-col">
-      <header className="bg-white shadow-sm">
+      <header className="bg-cream-50 shadow-sm border-b border-teal-100">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
@@ -329,7 +329,7 @@ export const WizardContainer: React.FC = () => {
             <PrivacyNotice variant="banner" />
           </div>
           
-          <div className="bg-white rounded-card shadow-card p-8">
+          <div className="bg-cream-50 rounded-card shadow-card p-8 border border-teal-50">
             <div className="mb-8">
               <div className="flex justify-between items-start mb-2">
                 <div>

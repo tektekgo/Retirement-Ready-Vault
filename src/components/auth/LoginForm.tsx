@@ -49,7 +49,7 @@ export const LoginForm: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-gradient-subtle">
       <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full">
-          <div className="bg-white rounded-card shadow-card p-8">
+          <div className="bg-cream-50 rounded-card shadow-card p-8 border border-teal-50">
             <div className="text-center mb-8">
               <img 
                 src="/ai-focus-logo.svg" 

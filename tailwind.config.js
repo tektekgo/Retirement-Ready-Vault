@@ -26,6 +26,11 @@ export default {
           950: '#15314D', // Brand navy from logo
         },
         
+        cream: {
+          50: '#fefdfb', // Very light warm white
+          100: '#fef9f3', // Subtle cream
+        },
+        
         teal: {
           50: '#f0fdfa',
           100: '#ccfbf1',
@@ -125,7 +130,8 @@ export default {
         'gradient-primary': 'linear-gradient(135deg, #15314D 0%, #0d9488 100%)',
         'gradient-teal': 'linear-gradient(135deg, #0d9488 0%, #059669 100%)',
         'gradient-navy': 'linear-gradient(135deg, #15314D 0%, #102a43 100%)',
-        'gradient-subtle': 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+        'gradient-subtle': 'linear-gradient(135deg, #f0fdfa 0%, #e6fffa 50%, #f0f9ff 100%)', // Warmer with teal/blue tints
+        'gradient-warm': 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%)', // Subtle teal tint
       },
     },
   },

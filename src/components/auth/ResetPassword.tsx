@@ -94,7 +94,7 @@ export const ResetPassword: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-gradient-subtle">
         <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full">
-            <div className="bg-white rounded-card shadow-card p-8">
+            <div className="bg-cream-50 rounded-card shadow-card p-8 border border-teal-50">
               <div className="text-center">
                 <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mb-4"></div>
                 <h2 className="font-heading text-xl font-semibold text-slate-900 mb-2 tracking-tight">Verifying reset link...</h2>
@@ -113,7 +113,7 @@ export const ResetPassword: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-gradient-subtle">
         <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-md w-full">
-            <div className="bg-white rounded-card shadow-card p-8">
+            <div className="bg-cream-50 rounded-card shadow-card p-8 border border-teal-50">
               <div className="text-center">
                 <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-teal-100 mb-4">
                   <svg className="h-8 w-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

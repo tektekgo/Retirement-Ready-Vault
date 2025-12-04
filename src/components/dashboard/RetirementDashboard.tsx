@@ -212,7 +212,7 @@ export const RetirementDashboard: React.FC = () => {
     return (
       <div className="min-h-screen bg-gradient-subtle flex items-center justify-center">
         <div className="text-center max-w-md">
-          <div className="bg-white rounded-lg shadow-md p-8">
+          <div className="bg-cream-50 rounded-lg shadow-md p-8 border border-teal-50">
             <h2 className="font-heading text-2xl font-bold text-navy-900 mb-4">No Data Yet</h2>
             <p className="text-charcoal-600 mb-6">
               You haven't completed the retirement planning wizard yet. Complete the wizard to see your personalized analysis.
@@ -235,7 +235,7 @@ export const RetirementDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex flex-col">
-      <header className="bg-white shadow-sm">
+      <header className="bg-cream-50 shadow-sm border-b border-teal-100">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
@@ -276,7 +276,7 @@ export const RetirementDashboard: React.FC = () => {
             <PrivacyNotice variant="banner" />
           </div>
           
-          <div id="dashboard-content" className="bg-white rounded-card shadow-card p-8 mb-6">
+          <div id="dashboard-content" className="bg-cream-50 rounded-card shadow-card p-8 mb-6 border border-teal-50">
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h2 className="font-heading text-2xl font-bold text-slate-900 tracking-tight">Retirement Analysis Dashboard</h2>

@@ -193,7 +193,7 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle flex flex-col">
-      <header className="bg-white shadow-sm">
+      <header className="bg-cream-50 shadow-sm border-b border-teal-100">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img 
@@ -243,7 +243,7 @@ export const LandingPage: React.FC = () => {
 
           {hasExistingData ? (
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-lg shadow-md p-6 border-2 border-teal-200 hover:border-teal-400 transition-colors">
+              <div className="bg-cream-50 rounded-lg shadow-md p-6 border-2 border-teal-200 hover:border-teal-400 transition-colors">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,7 +273,7 @@ export const LandingPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-cream-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border border-teal-50">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-coral-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-coral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -309,7 +309,7 @@ export const LandingPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="md:col-span-2 bg-white rounded-lg shadow-md p-6 border border-charcoal-200">
+              <div className="md:col-span-2 bg-cream-50 rounded-lg shadow-md p-6 border border-teal-100">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-charcoal-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-charcoal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -345,7 +345,7 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-md p-8 text-center max-w-md mx-auto">
+            <div className="bg-cream-50 rounded-lg shadow-md p-8 text-center max-w-md mx-auto border border-teal-50">
               <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
