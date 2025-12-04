@@ -107,9 +107,10 @@ export const RegisterForm: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
-        <div className="bg-white rounded-card shadow-card p-8">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-navy-50 to-blue-50">
+      <div className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full">
+          <div className="bg-white rounded-card shadow-card p-8">
           <div className="text-center mb-8">
             <img 
               src="/ai-focus-logo.png" 
@@ -265,11 +266,9 @@ export const RegisterForm: React.FC = () => {
             </p>
           </div>
         </div>
-
-        <div className="mt-8">
-          <Footer className="border-t-0 py-0" />
-        </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 };
