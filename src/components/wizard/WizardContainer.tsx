@@ -11,6 +11,7 @@ import { retirementDataService } from '../../services/retirementData.service';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { PrivacyNotice } from '../common/PrivacyNotice';
 import { clearAllUserData } from '../../utils/dataManagement';
+import { getVersion } from '../../config/version';
 
 export const WizardContainer: React.FC = () => {
   const navigate = useNavigate();
@@ -446,6 +447,9 @@ export const WizardContainer: React.FC = () => {
           </p>
           <p className="text-xs text-charcoal-500 mt-2">
             Email: <a href="mailto:retirement-ready-vault@ai-focus.org" className="text-blue-600 hover:text-blue-500">retirement-ready-vault@ai-focus.org</a>
+          </p>
+          <p className="text-xs text-charcoal-400 mt-2">
+            {getVersion()}
           </p>
         </div>
       </footer>

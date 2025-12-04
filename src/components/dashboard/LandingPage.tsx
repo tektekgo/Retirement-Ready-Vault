@@ -7,6 +7,7 @@ import { exportToPDF, exportToCSV } from '../../services/export';
 import { calculateBasicAnalysis } from '../../services/retirementCalculations';
 import { PrivacyNotice } from '../common/PrivacyNotice';
 import { clearAllUserData } from '../../utils/dataManagement';
+import { getVersion } from '../../config/version';
 
 export const LandingPage: React.FC = () => {
   const { signOut, user } = useAuth();
@@ -387,6 +388,9 @@ export const LandingPage: React.FC = () => {
           </p>
           <p className="text-xs text-charcoal-500 mt-2">
             Email: <a href="mailto:retirement-ready-vault@ai-focus.org" className="text-blue-600 hover:text-blue-500">retirement-ready-vault@ai-focus.org</a>
+          </p>
+          <p className="text-xs text-charcoal-400 mt-2">
+            {getVersion()}
           </p>
         </div>
       </footer>

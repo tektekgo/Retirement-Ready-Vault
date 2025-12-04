@@ -1,6 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { execSync } from 'child_process'
+
+function getGitCommitCount(): string {
+  try {
+    return execSync('git rev-list --count HEAD').toString().trim();
+  } catch (error) {
+    return '0';
+  }
+}
 
 export default defineConfig({
   plugins: [react()],
@@ -8,6 +17,9 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+  },
+  define: {
+    'import.meta.env.VITE_GIT_COMMIT_COUNT': JSON.stringify(getGitCommitCount()),
   },
   server: {
     host: 'localhost',
