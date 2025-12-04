@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { Footer } from '../common/Footer';
 
 export const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -126,9 +127,9 @@ export const ForgotPassword: React.FC = () => {
           </div>
         </div>
 
-        <p className="mt-8 text-center text-sm text-charcoal-500">
-          © 2024 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-blue-600 hover:text-blue-500">www.ai-focus.org</a>
-        </p>
+        <div className="mt-8">
+          <Footer className="border-t-0 py-0" />
+        </div>
       </div>
     </div>
   );

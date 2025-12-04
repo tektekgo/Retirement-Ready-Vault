@@ -4,6 +4,7 @@ import { AuthGuard } from './components/auth/AuthGuard';
 import { LoginForm } from './components/auth/LoginForm';
 import { RegisterForm } from './components/auth/RegisterForm';
 import { ForgotPassword } from './components/auth/ForgotPassword';
+import { AuthCallback } from './components/auth/AuthCallback';
 import { LandingPage } from './components/dashboard/LandingPage';
 import { WizardContainer } from './components/wizard/WizardContainer';
 import { RetirementDashboard } from './components/dashboard/RetirementDashboard';
@@ -34,6 +35,14 @@ function App() {
             element={
               <AuthGuard requireAuth={false}>
                 <ForgotPassword />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/auth/callback" 
+            element={
+              <AuthGuard requireAuth={false}>
+                <AuthCallback />
               </AuthGuard>
             } 
           />

@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_OPENROUTER_API_KEY: string
   readonly VITE_APP_URL: string
   readonly VITE_INVITE_CODES?: string
+  readonly VITE_GIT_COMMIT_COUNT?: string
 }
 
 interface ImportMeta {

@@ -6,6 +6,7 @@ import { RetirementData } from '../../types';
 import { exportToPDF, exportToCSV } from '../../services/export';
 import { calculateBasicAnalysis } from '../../services/retirementCalculations';
 import { PrivacyNotice } from '../common/PrivacyNotice';
+import { Footer } from '../common/Footer';
 import { clearAllUserData } from '../../utils/dataManagement';
 
 export const LandingPage: React.FC = () => {
@@ -380,16 +381,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </main>
 
-      <footer className="bg-white border-t border-charcoal-200 py-6">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-sm text-charcoal-600">
-            © 2025 AI-Focus.org | <a href="https://www.ai-focus.org" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors">www.ai-focus.org</a>
-          </p>
-          <p className="text-xs text-charcoal-500 mt-2">
-            Email: <a href="mailto:retirement-ready-vault@ai-focus.org" className="text-blue-600 hover:text-blue-500">retirement-ready-vault@ai-focus.org</a>
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

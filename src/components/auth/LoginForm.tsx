@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { Footer } from '../common/Footer';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,16 @@ export const LoginForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const { signIn, signInWithMagicLink } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Handle error from callback redirect
+  useEffect(() => {
+    if (location.state && typeof location.state === 'object' && 'error' in location.state) {
+      setError(location.state.error as string);
+      // Clear the state to prevent showing error on subsequent renders
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -155,9 +166,9 @@ export const LoginForm: React.FC = () => {
           </div>
         </div>
 
-        <p className="mt-8 text-center text-sm text-charcoal-500">
-          © 2025 AI-Focus.org | <a href="https://www.ai-focus.org" className="text-blue-600 hover:text-blue-500">www.ai-focus.org</a>
-        </p>
+        <div className="mt-8">
+          <Footer className="border-t-0 py-0" />
+        </div>
       </div>
     </div>
   );
