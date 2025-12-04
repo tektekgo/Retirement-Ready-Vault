@@ -9,6 +9,7 @@ import { AuthCallback } from './components/auth/AuthCallback';
 import { LandingPage } from './components/dashboard/LandingPage';
 import { WizardContainer } from './components/wizard/WizardContainer';
 import { RetirementDashboard } from './components/dashboard/RetirementDashboard';
+import { ResendTest } from './components/admin/ResendTest';
 
 function App() {
   return (
@@ -76,6 +77,16 @@ function App() {
             element={
               <AuthGuard requireAuth={true}>
                 <RetirementDashboard />
+              </AuthGuard>
+            } 
+          />
+          <Route 
+            path="/test/resend" 
+            element={
+              <AuthGuard requireAuth={false}>
+                <div className="min-h-screen bg-gradient-subtle py-12 px-4">
+                  <ResendTest />
+                </div>
               </AuthGuard>
             } 
           />

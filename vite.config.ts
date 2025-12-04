@@ -37,5 +37,15 @@ export default defineConfig({
     },
     // HMR will automatically use the same port as the server
     // This prevents WebSocket errors when Vite switches to a different port
+    proxy: {
+      // Proxy API routes to Vercel serverless functions
+      // For local dev, use: vercel dev (this will handle API routes)
+      // Or test on production where API routes work automatically
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
 })
