@@ -5,4 +5,3 @@ export const VERSION_MINOR = 0;
 
 // Patch version will be auto-incremented based on git commit count
 // This is injected at build time via vite.config.ts
-

@@ -8,6 +8,7 @@ import { calculateBasicAnalysis } from '../../services/retirementCalculations';
 import { PrivacyNotice } from '../common/PrivacyNotice';
 import { Footer } from '../common/Footer';
 import { clearAllUserData } from '../../utils/dataManagement';
+import { getVersion } from '../../config/version';
 
 export const LandingPage: React.FC = () => {
   const { signOut, user } = useAuth();
