@@ -8,8 +8,8 @@
   font-weight: 400;
 
   color-scheme: light;
-  color: rgba(15, 23, 42, 0.9); /* slate-900 with slight transparency */
-  background-color: #ffffff;
+  color: #171C1B; /* Foreground color */
+  background-color: #FDF7EC; /* Background color */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
